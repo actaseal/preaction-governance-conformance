@@ -22,9 +22,13 @@ unchanged: `key_unresolved` versus `signature_invalid`, with the completeness in
 
 ## Evaluation order
 
-1. **Key step.** The §5.4.2 key step runs first and stops evaluation on `key_unresolved` or `signature_invalid`.
-2. **Malformed conditions.** All of them are then evaluated (report-all), with type-check suppression: an ill-typed member raises `acceptance_member_invalid` only, not the mismatch that depends on it.
+1. **Key step.** The §5.4.2 key step runs first and stops evaluation on `key_unresolved` or `signature_invalid`. The two surface differently: `key_unresolved` is its own result token (exit 2), because no check ran. `signature_invalid` is a confirmed finding, so it surfaces as result `malformed` with `conditions: ["signature_invalid"]` (exit 1). It is the only condition reported, since evaluation stops there. `key_step` records which key sub-case occurred in both cases.
+2. **Malformed conditions.** All of them are then evaluated (report-all), with type-check suppression: an ill-typed member raises `acceptance_member_invalid` only, not the mismatch that depends on it. For a `*_sha256` member, well-typed means a string of exactly 64 lowercase hex characters (the -03 §5.3.2 rule for `resource_sha256`), not any JSON string. So `"not-hex"` is ill-typed, and the digest mismatch it would otherwise cause is suppressed.
 3. **Authority.** It is checked only when nothing is malformed, so an `unknown` is never stacked on a malformed finding.
+
+`disposition` is reported only with `verified` and `unknown`, where a signed, well-formed record exists to report it from. It is `null` on `malformed` and `key_unresolved`, and `not_responded` on `no_record`. No vector pins it on a non-clean result.
+
+These three points were always the checker's behavior. They were unstated here until @actaseal's independent from-scratch implementation ([x402-acceptance-check-cold](https://github.com/actaseal/x402-acceptance-check-cold), 22/25 agreement against `646588c`) read the text the other way on exactly these cases. No expectation changed.
 
 ## Readings the comment does not fix
 
