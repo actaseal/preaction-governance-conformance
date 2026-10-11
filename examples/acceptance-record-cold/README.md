@@ -44,6 +44,15 @@ These three points were always the checker's behavior. They were unstated here u
 - **A8.** `acceptance_record_digest_mismatch` (added 2026-10-05 at Shodai's request): the acceptance carries `accepted_record_sha256`. That is sha256 over the RFC 8785 (JCS) bytes of the record it accepts. The relying party recomputes it over the record it holds. A mismatch is malformed, and an absent member is `acceptance_member_invalid`. Vector pair: `acc-record-digest-matches-second-receipt` (verified) and `acc-record-digest-mismatch-replayed`. The second is the same acceptance presented against a different receipt with identical terms and outcome digests.
 - **A7.** `acceptance_precedes_outcome` is strict. An acceptance at the outcome's own instant does not precede it (vector `acc-same-instant-as-outcome-ok`).
 
+## Independent implementations
+
+| Implementation | Written from | Pinned corpus | Result | Notes |
+|---|---|---|---|---|
+| This checker (`tools/acceptance_record_check.py`) | the tsc#4 condition table and -03 §5.4.2 | `646588c` | 25/25 | reference for these vectors |
+| [actaseal/x402-acceptance-check-cold](https://github.com/actaseal/x402-acceptance-check-cold) at [`b06ca87`](https://github.com/actaseal/x402-acceptance-check-cold/tree/b06ca870b667e9883d3186c0ee6b4ef05b6470fd) | spec text only; this checker never opened; stdlib RFC 8032 Ed25519 | `646588c`, sha256-verified on every run | 22/25 | the 3 differences are the readings stated under "Evaluation order" (2026-10-11); reproduced here cold |
+
+Each row is pinned to a commit. When the corpus changes, a row stays at its old pin until that implementation re-runs.
+
 ## Resolved questions (tsc#4, 2026-10-05)
 
 - **Record binding.** Shodai asked for the record-binding condition (A8), and it is now in.
