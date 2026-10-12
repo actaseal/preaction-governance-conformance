@@ -50,6 +50,7 @@ These three points were always the checker's behavior. They were unstated here u
 |---|---|---|---|---|
 | This checker (`tools/acceptance_record_check.py`) | the tsc#4 condition table and -03 §5.4.2 | `a747e46` | 27/27 | reference for these vectors |
 | [actaseal/x402-acceptance-check-cold](https://github.com/actaseal/x402-acceptance-check-cold) at [`b06ca87`](https://github.com/actaseal/x402-acceptance-check-cold/tree/b06ca870b667e9883d3186c0ee6b4ef05b6470fd) | spec text only; this checker never opened; stdlib RFC 8032 Ed25519 | `646588c`, sha256-verified on every run | 22/25 | the 3 differences are the readings stated under "Evaluation order" (2026-10-11); reproduced here cold |
+| [robertolocatelli81-dev/x402-acceptance-check-omega](https://github.com/robertolocatelli81-dev/x402-acceptance-check-omega) at [`fd88fbb`](https://github.com/robertolocatelli81-dev/x402-acceptance-check-omega/tree/fd88fbb3fc369b656bf9eb237131885b3e27ef5d) (Noûs, for Roberto Locatelli) | the tsc#4 table and replies, this README at `646588c` and `5a4ea06`, -03 §5.3.2, §5.4.1 and §5.4.2; this checker never opened; stdlib RFC 8032 Ed25519 | `a747e46` (same bytes at `d750291`), sha256-pinned | 27/27 (25/25 at `646588c`); always-accept control 3/27; reproduced here cold | not independent on the three readings stated at `5a4ea06` (read before writing); with them read the other way, 23/27 |
 
 Each row is pinned to a commit. When the corpus changes, a row stays at its old pin until that implementation re-runs.
 
