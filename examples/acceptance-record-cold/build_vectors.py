@@ -105,6 +105,25 @@ add("acc-signature-invalid", case(jws(BODY, kid="cp-1", sk=OTHER_SK)), "malforme
 add("acc-signature-invalid-declared-complete", case(jws(BODY, kid="cp-1", sk=OTHER_SK), complete=True), "malformed", ["signature_invalid"],
     key_step="signature_invalid")
 
+# One acceptance (BODY, kid cp-1, signed by the counterparty's own key) presented two ways. The existing key-step vectors
+# reach their results by signing with a different key; this pair holds the signed record fixed and changes one thing each.
+SAME = jws(BODY)
+JWKS_NO_CP1 = {"keys": [k for k in JWKS["keys"] if k["kid"] != "cp-1"]}
+
+
+def flip_sig_byte(acc, i=0):
+    sig = bytearray(base64.urlsafe_b64decode(acc["signature"] + "=" * (-len(acc["signature"]) % 4)))
+    sig[i] ^= 0x01
+    return {**acc, "signature": b64(bytes(sig))}
+
+
+add("acc-key-unresolved-valid-signature-kid-not-in-trust-material", {**case(SAME), "trust_material": JWKS_NO_CP1}, "key_unresolved", [],
+    key_step="key_unresolved", what="-03 5.4.2(a): a correctly signed record whose kid (cp-1) is not in the trust material; "
+    "no check ran, so this is not malformed and not a failed signature")
+add("acc-signature-invalid-one-byte-flipped", case(flip_sig_byte(SAME)), "malformed", ["signature_invalid"], key_step="signature_invalid",
+    what="-03 5.4.2(c): the SAME record with cp-1 resolvable and the first signature byte XOR 0x01; "
+    "signature_invalid is the only condition reported")
+
 out = {"description": "Acceptance-record vectors for Shodai's condition set (x402-foundation/tsc#4, 2026-10-04), keys per "
        "draft-krausz-verification-state-03 5.4.2. Conditions compare as SETS. Built by build_vectors.py; CC0-1.0.",
        "vectors": V}
