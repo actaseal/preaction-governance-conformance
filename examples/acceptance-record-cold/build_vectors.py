@@ -36,8 +36,8 @@ BODY = {"acceptance_version": "acceptance-record-v0", "confirming_party": "did:e
         "accepted_at": "2026-10-04T18:05:00.000Z", "accepted_record_sha256": rd(RECORD)}
 
 
-def jws(body, kid="cp-1", sk=CP_SK, raw_payload=None):
-    prot = b64(json.dumps({"alg": "EdDSA", "kid": kid}, sort_keys=True, separators=(",", ":")).encode())
+def jws(body, kid="cp-1", sk=CP_SK, raw_payload=None, hdr=None):
+    prot = b64(json.dumps(hdr if hdr is not None else {"alg": "EdDSA", "kid": kid}, sort_keys=True, separators=(",", ":")).encode())
     pay = b64(raw_payload if raw_payload is not None else json.dumps(body, sort_keys=True, separators=(",", ":")).encode())
     return {"protected": prot, "payload": pay, "signature": b64(sk.sign(f"{prot}.{pay}".encode()))}
 
@@ -123,6 +123,21 @@ add("acc-key-unresolved-valid-signature-kid-not-in-trust-material", {**case(SAME
 add("acc-signature-invalid-one-byte-flipped", case(flip_sig_byte(SAME)), "malformed", ["signature_invalid"], key_step="signature_invalid",
     what="-03 5.4.2(c): the SAME record with cp-1 resolvable and the first signature byte XOR 0x01; "
     "signature_invalid is the only condition reported")
+
+# Sentences 5-8 (tsc#4, 2026-10-12): probes by @Tetsurohhori's fourth reader where the text was silent and the checkers enforced a rule.
+add("acc-accepted-at-no-fraction", case(jws(body(accepted_at="2026-10-04T18:05:00Z"))), "malformed", ["acceptance_member_invalid"],
+    what="sentence 5: a timestamp is the -03 5.3.2 form YYYY-MM-DDTHH:MM:SS.mmmZ exactly; valid RFC 3339 without the fraction is ill-typed")
+add("acc-accepted-at-offset-same-instant", case(jws(body(accepted_at="2026-10-05T03:05:00.000+09:00"))), "malformed", ["acceptance_member_invalid"],
+    what="sentence 5: the same instant as acc-accepted-verified written with +09:00 is ill-typed, so the ordering rule is never reached")
+RECORD_NOFRAC = {**RECORD, "outcome_at": "2026-10-04T18:00:00Z"}
+add("acc-outcome-at-no-fraction", case(jws(body(accepted_record_sha256=rd(RECORD_NOFRAC))), record=RECORD_NOFRAC), "malformed",
+    ["acceptance_member_invalid"], what="sentence 5 applies to the supplied record's outcome_at too (members_invalid: accepted_record)")
+add("acc-header-alg-not-eddsa", case(jws(BODY, hdr={"alg": "ES256", "kid": "cp-1"})), "malformed", ["acceptance_member_invalid"],
+    what="sentence 6: the protected header's alg must be EdDSA; ES256 with a valid Ed25519 signature is malformed before the key step")
+add("acc-header-no-kid", case(jws(BODY, hdr={"alg": "EdDSA"})), "malformed", ["acceptance_member_invalid"],
+    what="sentence 6: no kid (or a non-string kid) is malformed, not key_unresolved: there is no kid to look up")
+add("acc-complete-not-boolean", case(jws(BODY, kid="cp-9", sk=OTHER_SK), complete="true"), "key_unresolved", [], key_step="key_unresolved",
+    policy_refusal=None, what="sentence 8: trust_material_complete is a declaration only as JSON true; the string \"true\" (or 1) is not, so no policy_refusal")
 
 out = {"description": "Acceptance-record vectors for Shodai's condition set (x402-foundation/tsc#4, 2026-10-04), keys per "
        "draft-krausz-verification-state-03 5.4.2. Conditions compare as SETS. Built by build_vectors.py; CC0-1.0.",
