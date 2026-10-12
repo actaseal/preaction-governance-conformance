@@ -66,13 +66,24 @@ Order, per "Evaluation order" above: an undecodable encoding or protected header
 
 | Implementation | Written from | Pinned corpus | Result | Notes |
 |---|---|---|---|---|
-| This checker (`tools/acceptance_record_check.py`) | the tsc#4 condition table and -03 §5.4.2 | `a747e46` | 27/27 | reference for these vectors |
+| This checker (`tools/acceptance_record_check.py`) | the tsc#4 condition table and -03 §5.4.2 | `536681b` | 46/46 | reference for these vectors |
 | [actaseal/x402-acceptance-check-cold](https://github.com/actaseal/x402-acceptance-check-cold) at [`b06ca87`](https://github.com/actaseal/x402-acceptance-check-cold/tree/b06ca870b667e9883d3186c0ee6b4ef05b6470fd) | spec text only; this checker never opened; stdlib RFC 8032 Ed25519 | `646588c`, sha256-verified on every run | 22/25 | the 3 differences are the readings stated under "Evaluation order" (2026-10-11); reproduced here cold |
 | [robertolocatelli81-dev/x402-acceptance-check-omega](https://github.com/robertolocatelli81-dev/x402-acceptance-check-omega) at [`0496d58`](https://github.com/robertolocatelli81-dev/x402-acceptance-check-omega/tree/0496d585acf1899c94fff2bd94105611e4071fac) (Noûs, for Roberto Locatelli; was `fd88fbb`) | the tsc#4 table and replies, this README at `646588c`, `5a4ea06` and sentences 1-4, -03 §5.3.2, §5.4.1 and §5.4.2; this checker never opened (run only as a black box); stdlib RFC 8032 Ed25519 | `d750291` (same bytes at `90b5032`), sha256-pinned; also the 40 vectors of PR #14 at `8263e3e` | 27/27 (25/25 at `646588c`, 40/40 at `8263e3e`); always-accept control 3/27 | aligned with sentences 1-4; not independent on the three readings stated at `5a4ea06` (read before writing); refuses as `input_error` the inputs sentence 8 lets through |
 
 | Tetsuroh Hori's reader, [aos-standard/catalog `docs/runs/acceptance-record-cold-27/`](https://github.com/aos-standard/catalog/tree/bc9f621/docs/runs/acceptance-record-cold-27) at `bc9f621` | Shodai's table, -03 §5.3.2, §5.4.1(h) and §5.4.2, this README at `d750291` (before sentences 1-4); this checker and the other implementations never opened; Ed25519 via `cryptography` | `d750291` (same bytes at `90b5032`), sha256 `4d01f3e7…ced0e` | 27/27 | plus 23 one-change probes run three ways (this checker at `90b5032`, omega at `0496d58`); its findings became sentences 5-8 |
 
 Each row is pinned to a commit. When the corpus changes, a row stays at its old pin until that implementation re-runs.
+
+Sentence 8 choice, per implementation (a profile choice, not a -03 requirement; @TKCollective asked that each result state it):
+
+| Implementation | `trust_material_complete` not JSON `true` | duplicate `kid` in trust material |
+|---|---|---|
+| This checker | "not complete" | first Ed25519 entry |
+| omega | `input_error` | `input_error` |
+| Tetsuroh Hori's reader | "not complete" | first entry |
+| actaseal | not reported | not reported |
+
+A deployment that prefers omega's behaviour should refuse those inputs before calling this checker.
 
 ## Resolved questions (tsc#4, 2026-10-05)
 
