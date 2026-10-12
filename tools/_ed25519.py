@@ -56,11 +56,27 @@ def _decode(b):
     if y >= _p:
         raise ValueError("y out of range")
     x = _xrecover(y)
+    if x == 0 and (b[31] >> 7):        # RFC 8032 5.1.3 step 4: checked BEFORE negation (else x becomes p, not 0)
+        raise ValueError("invalid point")
     if (x & 1) != (b[31] >> 7):
         x = _p - x
-    if x == 0 and (b[31] >> 7):
-        raise ValueError("invalid point")
     return (x, y, 1, x * y % _p)
+
+
+_O = (0, 1, 1, 0)
+
+
+def is_small_order(P) -> bool:
+    """True for the 8 points of order dividing 8 (incl. the identity). Such a key binds nobody: with A = identity,
+    R = identity, S = 0 verifies for every message under plain RFC 8032 5.1.7 (reported on x402-foundation/tsc#4)."""
+    return _eq(_mul(8, P), _O)
+
+
+def is_small_order_key(public_key: bytes) -> bool:
+    try:
+        return is_small_order(_decode(public_key))
+    except Exception:
+        return False
 
 
 def verify(public_key: bytes, message: bytes, signature: bytes) -> bool:
@@ -69,6 +85,8 @@ def verify(public_key: bytes, message: bytes, signature: bytes) -> bool:
             return False
         A = _decode(public_key)
         R = _decode(signature[:32])
+        if is_small_order(A) or is_small_order(R):
+            return False
         s = int.from_bytes(signature[32:], "little")
         if s >= _L:
             return False

@@ -30,6 +30,17 @@ unchanged: `key_unresolved` versus `signature_invalid`, with the completeness in
 
 These three points were always the checker's behavior. They were unstated here until @actaseal's independent from-scratch implementation ([x402-acceptance-check-cold](https://github.com/actaseal/x402-acceptance-check-cold), 22/25 agreement against `646588c`) read the text the other way on exactly these cases. No expectation changed.
 
+## Inputs the vectors do not yet pin (tsc#4, 2026-10-12)
+
+Sentences 1-3 were proposed by @robertolocatelli81-dev (Noûs) on x402-foundation/tsc#4 and are adopted as worded; they state what the checker already returns. Sentence 4 settles the reading the text left open and is a checker change (see "Changes between versions").
+
+1. A member of the signed acceptance other than the seven the vectors use (`acceptance_version`, `accepted_at`, `accepted_record_sha256`, `confirming_party`, `disposition`, `outcome_sha256`, `terms_sha256`) is ignored.
+2. An acceptance whose `protected`, `payload` or `signature` is not base64url without padding (RFC 7515 §2), or whose protected header or payload does not decode to a JSON object, is malformed `acceptance_member_invalid`.
+3. `acceptance_version` is required and is `acceptance-record-v0`; absent, not a string, or any other value, it is malformed `acceptance_member_invalid`.
+4. A key in the trust material that is a small-order point (any of the 8 points whose order divides 8, the identity among them) is not a key of the confirming party: the result is `key_unresolved` (§5.4.2(a)), with `policy_refusal: true` if the trust material was declared complete. A signature whose `R` is a small-order point is `signature_invalid`. RFC 8032 does not require either refusal, but under such a key one signature (`R` = identity, `S` = 0) verifies every message, so an acceptance under it binds nobody.
+
+Order, per "Evaluation order" above: an undecodable encoding or protected header is found before the key step; a payload that decodes but is not a JSON object is found after it, so with an invalid signature the result is `signature_invalid`.
+
 ## Readings the comment does not fix
 
 - **A1.** Version member `acceptance_version: "acceptance-record-v0"` (provisional; the comment names none).
@@ -61,6 +72,8 @@ Each row is pinned to a commit. When the corpus changes, a row stays at its old 
 - **`acceptance_member_invalid`.** It works as is; -03 may prefer splitting it.
 
 ## Changes between versions
+
+**Checker, 2026-10-12 (corpus unchanged, 27 vectors).** `tools/_ed25519.py` refuses small-order public keys and small-order `R`, and decodes `x = 0` with the sign bit set as invalid (RFC 8032 §5.1.3, checked before negation). `tools/acceptance_record_check.py` treats a small-order trust-material key as unresolved (sentence 4 above). Reported by @robertolocatelli81-dev (Noûs) on x402-foundation/tsc#4: before this change, an identity key with `R` = identity, `S` = 0 verified for every message. No `expect` changed; `vectors.json` regenerates byte-identically; `run_vectors.py` 27/27.
 
 **`646588c` (25 vectors) -> `a747e46` (27 vectors).** Added: `acc-key-unresolved-valid-signature-kid-not-in-trust-material`, `acc-signature-invalid-one-byte-flipped` (the §5.4.2(a)/(c) split, pinned to one signed record instead of two differently-signed ones). Removed: none. No `expect` changed for the 25 existing vectors; byte-identical regeneration confirmed. The pair holds a single acceptance (`BODY`, signed by `cp-1`) fixed and changes exactly one input each: vector A drops `cp-1` from `trust_material` (other, unrelated keys stay in, so the result is attributable to the missing key and not to an empty trust set) for `key_unresolved`; vector B keeps `cp-1` resolvable and flips the first signature byte for `malformed`/`signature_invalid`. Contributed as [PR #13](https://github.com/babyblueviper1/preaction-governance-conformance/pull/13) by @actaseal, through `build_vectors.py`, expectations written by hand from this README. Independently re-verified here before merge: regeneration is byte-identical and `run_vectors.py` reports 27/27.
 
