@@ -1793,6 +1793,733 @@
    },
    "id": "acc-complete-not-boolean",
    "what": "sentence 8: trust_material_complete is a declaration only as JSON true; the string \"true\" (or 1) is not, so no policy_refusal"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOiJhY2NlcHRhbmNlLXJlY29yZC12MCIsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm5vdGUiOiJleHRyYSBtZW1iZXIsIHNpZ25lZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "aCzAT2Wk2LUTvS3qEx0cSSdHUxUPZWDOkThrL0UGZ96KmdyYqE0DA2Tia3lXZ1cnSPIqyiIKemNXXGvWl1EcDw"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [],
+    "disposition": "accepted",
+    "result": "verified"
+   },
+   "id": "acc-extra-signed-member-ignored",
+   "what": "sentence 1: a signed member other than the seven the vectors use is ignored"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOiJhY2NlcHRhbmNlLXJlY29yZC12MCIsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "Ju0TPXCrekbdZkPgf2VyhzPdw5mPVn5Cx8dZJ2XMJ8OpRhvfc0k6prT0Kt7Ce-CLFGhEhZmxvcj03aGUehT0AA=="
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [
+     "acceptance_member_invalid"
+    ],
+    "result": "malformed"
+   },
+   "id": "acc-envelope-signature-padded",
+   "what": "sentence 2: the same signature with base64 '=' padding is not base64url without padding (RFC 7515 2); found before the key step"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOiJhY2NlcHRhbmNlLXJlY29yZC12MCIsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "Ju0TPXCrekbdZkPgf2VyhzPdw5mPVn5Cx8dZJ2XMJ8OpRhvfc0k6prT0Kt7Ce+CLFGhEhZmxvcj03aGUehT0AA"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [
+     "acceptance_member_invalid"
+    ],
+    "result": "malformed"
+   },
+   "id": "acc-envelope-signature-standard-alphabet",
+   "what": "sentence 2: the same signature bytes in the standard base64 alphabet ('+' for '-') are not base64url; found before the key step"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOiJhY2NlcHRhbmNlLXJlY29yZC12MCIsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "WyJFZERTQSIsImNwLTEiXQ",
+     "signature": "bpJt4x7ijM79x44cDLlGZ09RKs6nMRiJ13JgXxp09UNtmiO5Y7GDQB5MvzHiPS8usbNaACHZjI7FouU3wKcdBQ"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [
+     "acceptance_member_invalid"
+    ],
+    "result": "malformed"
+   },
+   "id": "acc-envelope-protected-not-json-object",
+   "what": "sentence 2: the protected header decodes to a JSON array, not an object; found before the key step"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "W10",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "hXE4UJ6iz0On5IvJOvR2nVw1QHvTyhOjtUlJS5yz2hEYmpbWMsCN8gfp1_gAQT28i4_8YiE2RXp72AZnpFKzCg"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [
+     "acceptance_member_invalid"
+    ],
+    "result": "malformed"
+   },
+   "id": "acc-envelope-payload-not-json-object",
+   "what": "sentence 2: the payload is validly signed by cp-1 and decodes to a JSON array, not an object"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "W10",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "hHE4UJ6iz0On5IvJOvR2nVw1QHvTyhOjtUlJS5yz2hEYmpbWMsCN8gfp1_gAQT28i4_8YiE2RXp72AZnpFKzCg"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [
+     "signature_invalid"
+    ],
+    "key_step": "signature_invalid",
+    "result": "malformed"
+   },
+   "id": "acc-envelope-payload-not-json-object-signature-invalid",
+   "what": "README order note: a payload that decodes but is not a JSON object is found after the key step, so with the first signature byte XOR 0x01 the result is signature_invalid"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRlZF9hdCI6IjIwMjYtMTAtMDRUMTg6MDU6MDAuMDAwWiIsImFjY2VwdGVkX3JlY29yZF9zaGEyNTYiOiI1MzAyMmFmZTI2Y2RiZTA4ZDU4Y2VlMGE1ZjZhNzQwOTA4ZWJhYmU1ZWJlZGM4ZjRiYzhkM2RlZGM1NWY2YTY4IiwiY29uZmlybWluZ19wYXJ0eSI6ImRpZDpleGFtcGxlOmNvdW50ZXJwYXJ0eSIsImRpc3Bvc2l0aW9uIjoiYWNjZXB0ZWQiLCJvdXRjb21lX3NoYTI1NiI6IjFjMjczY2RhYmM4NzJhMzYxMDU3MDk5MDE4YjA5ZmU0NzgzYTFlMTZlNjVhY2E1ZDAxNTU2N2I3Nzk4NzJkOWQiLCJ0ZXJtc19zaGEyNTYiOiJkMjRhNTI2NDZjYWNhNjhmZjc0ZmUyMjM0ZWI4MWNlYTY1ODhlNzE2NmZjMTk1ZDU0OTYxZWM3YzBhNmE2NTM1In0",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "qAnNvdGK2MxWJCnCNMI2upLoPcWFHsfRjZN_hxuG5G3G_YrHfNcGkGj6p9V81LrfMSAufyJnk6RlrqG9qksFDg"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [
+     "acceptance_member_invalid"
+    ],
+    "result": "malformed"
+   },
+   "id": "acc-version-absent",
+   "what": "sentence 3: acceptance_version is required"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOjAsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "HZW5pwjypCJn6hJpOeXHcDpU5GPt9XWNO50xoRZqaeGEk9suACdJ-kGbNFYNpUD5Lm5sYNqxwmwD0CAeROx1BQ"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [
+     "acceptance_member_invalid"
+    ],
+    "result": "malformed"
+   },
+   "id": "acc-version-not-string",
+   "what": "sentence 3: acceptance_version present but not a string"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOiJhY2NlcHRhbmNlLXJlY29yZC12MSIsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "2fzm1vd5ntJ718O-nOcf7sXeZpRwcUmJA9OLTNgUWq7GETLk1eKf0uLDFyIrlZSmL7dZLson8JX2483ggsikCA"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [
+     "acceptance_member_invalid"
+    ],
+    "result": "malformed"
+   },
+   "id": "acc-version-other-value",
+   "what": "sentence 3: any value other than acceptance-record-v0 is malformed, not unknown"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOiJhY2NlcHRhbmNlLXJlY29yZC12MCIsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [],
+    "key_step": "key_unresolved",
+    "result": "key_unresolved"
+   },
+   "id": "acc-small-order-key-identity-forged-signature",
+   "what": "sentence 4: cp-1's key is the identity point and the signature is R = identity, S = 0 (two inputs change: the key and the signature); the key is not a key of the confirming party, so no check ran"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOiJhY2NlcHRhbmNlLXJlY29yZC12MCIsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": true
+   },
+   "expect": {
+    "conditions": [],
+    "key_step": "key_unresolved",
+    "policy_refusal": true,
+    "result": "key_unresolved"
+   },
+   "id": "acc-small-order-key-identity-declared-complete",
+   "what": "sentence 4: the previous vector with trust material declared complete: same token, plus policy_refusal (5.4.2(b))"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOiJhY2NlcHRhbmNlLXJlY29yZC12MCIsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "Ju0TPXCrekbdZkPgf2VyhzPdw5mPVn5Cx8dZJ2XMJ8OpRhvfc0k6prT0Kt7Ce-CLFGhEhZmxvcj03aGUehT0AA"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "JuiVj8KyJ7BFw_SJ8u-Y8NXfrAXTxjM5sTgCiG1T_AU"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [],
+    "key_step": "key_unresolved",
+    "result": "key_unresolved"
+   },
+   "id": "acc-small-order-key-order-8-genuine-signature",
+   "what": "sentence 4: cp-1's key replaced by a point of order 8; the record and signature are SAME"
+  },
+  {
+   "case": {
+    "acceptance": {
+     "payload": "eyJhY2NlcHRhbmNlX3ZlcnNpb24iOiJhY2NlcHRhbmNlLXJlY29yZC12MCIsImFjY2VwdGVkX2F0IjoiMjAyNi0xMC0wNFQxODowNTowMC4wMDBaIiwiYWNjZXB0ZWRfcmVjb3JkX3NoYTI1NiI6IjUzMDIyYWZlMjZjZGJlMDhkNThjZWUwYTVmNmE3NDA5MDhlYmFiZTVlYmVkYzhmNGJjOGQzZGVkYzU1ZjZhNjgiLCJjb25maXJtaW5nX3BhcnR5IjoiZGlkOmV4YW1wbGU6Y291bnRlcnBhcnR5IiwiZGlzcG9zaXRpb24iOiJhY2NlcHRlZCIsIm91dGNvbWVfc2hhMjU2IjoiMWMyNzNjZGFiYzg3MmEzNjEwNTcwOTkwMThiMDlmZTQ3ODNhMWUxNmU2NWFjYTVkMDE1NTY3Yjc3OTg3MmQ5ZCIsInRlcm1zX3NoYTI1NiI6ImQyNGE1MjY0NmNhY2E2OGZmNzRmZTIyMzRlYjgxY2VhNjU4OGU3MTY2ZmMxOTVkNTQ5NjFlYzdjMGE2YTY1MzUifQ",
+     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImNwLTEifQ",
+     "signature": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADVqlCG40hFLqQoByZOg3ctxTHbBP3sX6hG9cuL8_OXCQ"
+    },
+    "accepted_record": {
+     "issuer": "did:example:issuer",
+     "issuer_kid": "iss-1",
+     "outcome_at": "2026-10-04T18:00:00.000Z",
+     "outcome_sha256": "1c273cdabc872a361057099018b09fe4783a1e16e65aca5d015567b779872d9d",
+     "record_id": "receipt-0001",
+     "terms_sha256": "d24a52646caca68ff74fe2234eb81cea6588e7166fc195d54961ec7c0a6a6535"
+    },
+    "delegation": {
+     "did:example:counterparty": [
+      "cp-1"
+     ],
+     "did:example:issuer": [
+      "iss-1"
+     ]
+    },
+    "trust_material": {
+     "keys": [
+      {
+       "crv": "Ed25519",
+       "kid": "iss-1",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-1",
+       "kty": "OKP",
+       "x": "7TF4CaxY0kCA1MRX4vL3ujKNySAtpxEjHl4OE-J3n_g"
+      },
+      {
+       "crv": "Ed25519",
+       "kid": "cp-reused",
+       "kty": "OKP",
+       "x": "n9kGbhc28mdbPzaBTcYOakAIwZH0Q6VUybeWUh8OHeQ"
+      }
+     ]
+    },
+    "trust_material_complete": false
+   },
+   "expect": {
+    "conditions": [
+     "signature_invalid"
+    ],
+    "key_step": "signature_invalid",
+    "result": "malformed"
+   },
+   "id": "acc-small-order-r-real-key",
+   "what": "sentence 4: cp-1's real key; signature R = identity, S = k*a mod L, which passes [S]B = R + [k]A; a small-order R is signature_invalid"
   }
  ]
 }
