@@ -56,10 +56,10 @@ def _decode(b):
     if y >= _p:
         raise ValueError("y out of range")
     x = _xrecover(y)
+    if x == 0 and (b[31] >> 7):        # RFC 8032 5.1.3 step 4: checked BEFORE negation (else x becomes p, not 0)
+        raise ValueError("invalid point")
     if (x & 1) != (b[31] >> 7):
         x = _p - x
-    if x == 0 and (b[31] >> 7):
-        raise ValueError("invalid point")
     return (x, y, 1, x * y % _p)
 
 
