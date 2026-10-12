@@ -79,7 +79,8 @@ def _resolve_kid(kid, jwks):
                 x = _b64url_dec(k.get("x", ""))
             except ValueError:
                 continue
-            if len(x) == 32:
+            # A small-order point is not a key of the confirming party: no check can run (-03 5.4.2(a)).
+            if len(x) == 32 and not _ed25519.is_small_order_key(x):
                 return x
     return None
 
