@@ -7,8 +7,8 @@ someone else issued. The confirming party's key goes through draft-krausz-verifi
 unchanged: `key_unresolved` versus `signature_invalid`, with the completeness input.
 
 - Checker: [`tools/acceptance_record_check.py`](../../tools/acceptance_record_check.py). Stdlib only; Ed25519 verification is `tools/_ed25519.py`.
-- Vectors: `vectors.json` (25), CC0-1.0. Built by `build_vectors.py`, which uses fixed seeds and deterministic Ed25519, so it regenerates byte-identically. The checker and the runner are stdlib-only; `build_vectors.py` alone needs the `cryptography` package (signing only). Byte-identical regeneration was confirmed with `cryptography` 50.0.2 by an independent reproduction on x86_64 glibc ([tsc#4](https://github.com/x402-foundation/tsc/issues/4), @Tetsurohhori, which also ran the checker 22/22 on x86 glibc/musl, aarch64 and s390x); other versions are untested. Every expectation was written by hand from the condition table, not read back from the checker.
-- Run: `python3 run_vectors.py` reports 25/25. Condition lists compare as sets.
+- Vectors: `vectors.json` (27), CC0-1.0. Built by `build_vectors.py`, which uses fixed seeds and deterministic Ed25519, so it regenerates byte-identically. The checker and the runner are stdlib-only; `build_vectors.py` alone needs the `cryptography` package (signing only). Byte-identical regeneration was confirmed with `cryptography` 50.0.2 by an independent reproduction on x86_64 glibc ([tsc#4](https://github.com/x402-foundation/tsc/issues/4), @Tetsurohhori, which also ran the checker 22/22 on x86 glibc/musl, aarch64 and s390x); other versions are untested. Every expectation was written by hand from the condition table, not read back from the checker.
+- Run: `python3 run_vectors.py` reports 27/27. Condition lists compare as sets.
 
 ## Result tokens
 
@@ -48,7 +48,7 @@ These three points were always the checker's behavior. They were unstated here u
 
 | Implementation | Written from | Pinned corpus | Result | Notes |
 |---|---|---|---|---|
-| This checker (`tools/acceptance_record_check.py`) | the tsc#4 condition table and -03 §5.4.2 | `646588c` | 25/25 | reference for these vectors |
+| This checker (`tools/acceptance_record_check.py`) | the tsc#4 condition table and -03 §5.4.2 | `a747e46` | 27/27 | reference for these vectors |
 | [actaseal/x402-acceptance-check-cold](https://github.com/actaseal/x402-acceptance-check-cold) at [`b06ca87`](https://github.com/actaseal/x402-acceptance-check-cold/tree/b06ca870b667e9883d3186c0ee6b4ef05b6470fd) | spec text only; this checker never opened; stdlib RFC 8032 Ed25519 | `646588c`, sha256-verified on every run | 22/25 | the 3 differences are the readings stated under "Evaluation order" (2026-10-11); reproduced here cold |
 
 Each row is pinned to a commit. When the corpus changes, a row stays at its old pin until that implementation re-runs.
@@ -60,5 +60,7 @@ Each row is pinned to a commit. When the corpus changes, a row stays at its old 
 - **`acceptance_member_invalid`.** It works as is; -03 may prefer splitting it.
 
 ## Changes between versions
+
+**`646588c` (25 vectors) -> `a747e46` (27 vectors).** Added: `acc-key-unresolved-valid-signature-kid-not-in-trust-material`, `acc-signature-invalid-one-byte-flipped` (the §5.4.2(a)/(c) split, pinned to one signed record instead of two differently-signed ones). Removed: none. No `expect` changed for the 25 existing vectors; byte-identical regeneration confirmed. The pair holds a single acceptance (`BODY`, signed by `cp-1`) fixed and changes exactly one input each: vector A drops `cp-1` from `trust_material` (other, unrelated keys stay in, so the result is attributable to the missing key and not to an empty trust set) for `key_unresolved`; vector B keeps `cp-1` resolvable and flips the first signature byte for `malformed`/`signature_invalid`. Contributed as [PR #13](https://github.com/babyblueviper1/preaction-governance-conformance/pull/13) by @actaseal, through `build_vectors.py`, expectations written by hand from this README. Independently re-verified here before merge: regeneration is byte-identical and `run_vectors.py` reports 27/27.
 
 **`816afa9` (22 vectors) -> `646588c` (25 vectors).** Added: `acc-record-digest-matches-second-receipt`, `acc-record-digest-mismatch-replayed`, `acc-record-digest-absent` (the `acceptance_record_digest_mismatch` condition, tsc#4). Removed: none. No `expect` changed. **The input bytes of all 22 existing vectors did change:** every `accepted_record` gained `record_id`, and the acceptances now sign a body that includes `accepted_record_sha256`, so their payloads and signatures are new. A runner pinned to `816afa9` is unaffected; comparing the 22 shared cases across the two commits shows 22 byte differences with identical expectations. (Precision from @Tetsurohhori's vector-by-vector diff, tsc#4.)
