@@ -1,0 +1,177 @@
+{
+ "spec": "ACG profile draft of the ERC-8409 delivery verdict (eth-mag t/29858). See build_acg.py for the binding.",
+ "cases": {
+  "delivered_reserialized": {
+   "deliveryRecord": {
+    "scheme": "invinoveritas.delivery-record/2-acg-draft",
+    "quote": {
+     "quoteDigest": "0x48f1be2181771208981ebac78f2c01a5f224c7942e6149085c3e0f05dc81948f"
+    },
+    "request": {
+     "invokeBodySha256": "cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154"
+    },
+    "response": {
+     "status": 200,
+     "contentType": "application/json",
+     "backendBody": "{\n  \"city\": \"Santiago\",\n  \"days\": 7,\n  \"forecast\": [\n    {\n      \"date\": \"2028-09-03\",\n      \"tmin_c\": 6,\n      \"tmax_c\": 18\n    },\n    {\n      \"date\": \"2028-09-04\",\n      \"tmin_c\": 7,\n      \"tmax_c\": 19\n    },\n    {\n      \"date\": \"2028-09-05\",\n      \"tmin_c\": 8,\n      \"tmax_c\": 20\n    },\n    {\n      \"date\": \"2028-09-06\",\n      \"tmin_c\": 9,\n      \"tmax_c\": 21\n    },\n    {\n      \"date\": \"2028-09-07\",\n      \"tmin_c\": 10,\n      \"tmax_c\": 22\n    },\n    {\n      \"date\": \"2028-09-08\",\n      \"tmin_c\": 11,\n      \"tmax_c\": 23\n    },\n    {\n      \"date\": \"2028-09-09\",\n      \"tmin_c\": 12,\n      \"tmax_c\": 24\n    }\n  ]\n}",
+     "backendBodySha256": "9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab",
+     "bodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2"
+    },
+    "question": "Does this backend response deliver what the invoked request asked for?"
+   },
+   "deliveryRecordJcs": "{\"question\":\"Does this backend response deliver what the invoked request asked for?\",\"quote\":{\"quoteDigest\":\"0x48f1be2181771208981ebac78f2c01a5f224c7942e6149085c3e0f05dc81948f\"},\"request\":{\"invokeBodySha256\":\"cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154\"},\"response\":{\"backendBody\":\"{\\n  \\\"city\\\": \\\"Santiago\\\",\\n  \\\"days\\\": 7,\\n  \\\"forecast\\\": [\\n    {\\n      \\\"date\\\": \\\"2028-09-03\\\",\\n      \\\"tmin_c\\\": 6,\\n      \\\"tmax_c\\\": 18\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-04\\\",\\n      \\\"tmin_c\\\": 7,\\n      \\\"tmax_c\\\": 19\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-05\\\",\\n      \\\"tmin_c\\\": 8,\\n      \\\"tmax_c\\\": 20\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-06\\\",\\n      \\\"tmin_c\\\": 9,\\n      \\\"tmax_c\\\": 21\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-07\\\",\\n      \\\"tmin_c\\\": 10,\\n      \\\"tmax_c\\\": 22\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-08\\\",\\n      \\\"tmin_c\\\": 11,\\n      \\\"tmax_c\\\": 23\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-09\\\",\\n      \\\"tmin_c\\\": 12,\\n      \\\"tmax_c\\\": 24\\n    }\\n  ]\\n}\",\"backendBodySha256\":\"9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab\",\"bodyJcsSha256\":\"99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2\",\"contentType\":\"application/json\",\"status\":200},\"scheme\":\"invinoveritas.delivery-record/2-acg-draft\"}",
+   "deliveredBody": "{\"city\":\"Santiago\",\"days\":7,\"forecast\":[{\"date\":\"2028-09-03\",\"tmin_c\":6,\"tmax_c\":18},{\"date\":\"2028-09-04\",\"tmin_c\":7,\"tmax_c\":19},{\"date\":\"2028-09-05\",\"tmin_c\":8,\"tmax_c\":20},{\"date\":\"2028-09-06\",\"tmin_c\":9,\"tmax_c\":21},{\"date\":\"2028-09-07\",\"tmin_c\":10,\"tmax_c\":22},{\"date\":\"2028-09-08\",\"tmin_c\":11,\"tmax_c\":23},{\"date\":\"2028-09-09\",\"tmin_c\":12,\"tmax_c\":24}]}",
+   "receiptMetadata": {
+    "deliveryVerdict": {
+     "scheme": "invinoveritas.delivery-verdict/2-acg-draft",
+     "deliveryRecordSha256": "06b69d8b2a425e0ddec3bf7edd795bc5c20262600fb0e31b42c7c5d4683bb733",
+     "deliveredBodySha256": "8669da0054ee1482169b860e36d4195646a915659703c47abd076a684ba6c299",
+     "deliveredBodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2",
+     "verdict": "approve_with_concerns",
+     "proofEventId": "e13737dc8009e1d6f2adb5d55c013c545e9218e5ff7fac27da6c855e319ea4b4",
+     "proof": {
+      "id": "e13737dc8009e1d6f2adb5d55c013c545e9218e5ff7fac27da6c855e319ea4b4",
+      "pubkey": "6786e18a864893a900bd9858e650f67ccc3513f248fed374b591e2ff6922fbb7",
+      "created_at": 1791834381,
+      "kind": 30078,
+      "tags": [
+       [
+        "d",
+        "invinoveritas-proof-06b69d8b2a425e0ddec3bf7edd795bc5c20262600fb0e31b42c7c5d4683bb733-1791834381-6ff85402"
+       ],
+       [
+        "t",
+        "invinoveritas"
+       ],
+       [
+        "t",
+        "proof"
+       ],
+       [
+        "schema",
+        "invinoveritas.verdict_proof.v1"
+       ]
+      ],
+      "content": "{\"artifact_hash\":\"06b69d8b2a425e0ddec3bf7edd795bc5c20262600fb0e31b42c7c5d4683bb733\",\"artifact_type\":\"agent_output\",\"canonicalization_version\":\"rfc8785.v1\",\"confidence\":0.91,\"conformance_suite\":\"https://github.com/babyblueviper1/preaction-governance-conformance\",\"context_provenance\":\"caller_asserted_unverified\",\"decision_ref\":\"sha256:b1cd96f7e17241804b9a8b8eb6855a5a59b870108b2db76c9a8807a7f4970c22\",\"decision_ref_preimage_fields\":[\"artifact_hash\",\"artifact_type\",\"policy_version\",\"verdict\",\"source_class\",\"vantage_limitation\",\"related_decision_ref\",\"intended_audience\",\"confidentiality_tier\",\"disclosed_summary\",\"intended_verifier\",\"policy_commitment\",\"verified_at\",\"registry_as_of\",\"registry_snapshot_sha256\",\"action_binding_tool_hash\",\"action_binding_args_hash\",\"action_binding_agent_id\",\"action_binding_nonce\",\"freshness_beacon_hash\",\"epistemic_basis\",\"external_evidence_hash\",\"canonicalization_version\",\"related_claims_hash\",\"related_claims_result\",\"related_claims_comparison_version\",\"mediator_attestation_hash\"],\"decision_ref_preimage_rule\":\"every name in decision_ref_preimage_fields is a key in the hashed preimage object, always -- absent fields (e.g. vantage_limitation when not applicable) are present as JSON null, never omitted from the object.\",\"engine_generation\":1,\"epistemic_basis\":null,\"freshness_beacon\":{\"block_time\":1791832325,\"hash\":\"000000000000000000015011b8741c77cd0c62cc7a60caaa3bbf977623106ab2\",\"height\":971130,\"source\":\"bitcoin\"},\"freshness_beacon_hash\":\"sha256:863612bf7679ee33bf9656117e797016f97ef501cf5ffd82b947c85773702599\",\"independent_nodes\":[\"https://invinoveritas-castra.babyblueviper.workers.dev/verify\",\"https://babyblueviper1--2aba75da693711f185891607ee4eb77e.web.val.run\"],\"key_id\":\"6786e18a864893a900bd9858e650f67ccc3513f248fed374b591e2ff6922fbb7\",\"platform\":\"invinoveritas\",\"policy_commitment\":\"sha256:ce58857dea9f9851394bd3126f9aca28b8ef7cc95cc3562ab0e4a863f8be73fe\",\"policy_commitment_inputs\":{\"conformance_suite_commit\":\"e90948ed3eb9d36eb1d0997ea4d02045e28a405a\",\"conformance_suite_repo\":\"babyblueviper1/preaction-governance-conformance\",\"rubric_doc_path\":\"docs/policy_spec/invinoveritas.review.v12.md\",\"rubric_sha256\":\"bb74afa68bd5e8b1ca1038d8f0c8cd9a0d1f83888a7ea7df7c551f579a974180\"},\"policy_version\":\"invinoveritas.review.v22\",\"registry_as_of\":null,\"registry_snapshot_sha256\":null,\"related_claims_result\":\"not_supplied\",\"review_model_hash\":\"deda3dc02a1d1575f15d5c9f9b3e31cf0c768a55508c31e7ff0f4fc8f33fc669\",\"review_prompt_template_hash\":\"13a72a4c1e3a99b969ac46b724eceef6620716292f2b730f19915cdd469c1e31\",\"schema\":\"invinoveritas.verdict_proof.v1\",\"source_class\":\"agent_reported\",\"summary_hash\":\"848552d8f4efa41db27dd960d0f3589a26a9a92998cf24e12c9a363be94fc398\",\"verdict\":\"approve_with_concerns\",\"verified_at\":1791834380,\"verifier_keys\":\"https://api.babyblueviper.com/.well-known/verifier-keys.json\",\"verifier_pubkey\":\"6786e18a864893a900bd9858e650f67ccc3513f248fed374b591e2ff6922fbb7\",\"verify_how\":\"Easiest: install the offline verifier above and recompute locally. Or POST this proof's signed `event` to verify_url (or an independent_node), OR run NIP-01 yourself: recompute the Nostr event id = sha256([0,pubkey,created_at,kind,tags,content]), verify the schnorr signature against verifier_pubkey. valid \u21d2 invinoveritas issued this, untampered. No trust required.\",\"verify_offline\":\"npm i invinoveritas-verify  \u00b7  pip install invinoveritas-verify  \u2014 recompute this proof on your own machine against verifier_pubkey; you never have to call us.\",\"verify_url\":\"https://api.babyblueviper.com/verify-proof\"}",
+      "sig": "91d3fe3e6e9ed8ccfc621ab06eb30100d2c347077e93aad14cfcd8929af0efedd9380d9f0e9e3eb723c50587717ed7884d577182d85ecf7aecacc56fdb540366"
+     }
+    }
+   }
+  },
+  "gateway_altered": {
+   "deliveryRecord": {
+    "scheme": "invinoveritas.delivery-record/2-acg-draft",
+    "quote": {
+     "quoteDigest": "0x48f1be2181771208981ebac78f2c01a5f224c7942e6149085c3e0f05dc81948f"
+    },
+    "request": {
+     "invokeBodySha256": "cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154"
+    },
+    "response": {
+     "status": 200,
+     "contentType": "application/json",
+     "backendBody": "{\n  \"city\": \"Santiago\",\n  \"days\": 7,\n  \"forecast\": [\n    {\n      \"date\": \"2028-09-03\",\n      \"tmin_c\": 6,\n      \"tmax_c\": 18\n    },\n    {\n      \"date\": \"2028-09-04\",\n      \"tmin_c\": 7,\n      \"tmax_c\": 19\n    },\n    {\n      \"date\": \"2028-09-05\",\n      \"tmin_c\": 8,\n      \"tmax_c\": 20\n    },\n    {\n      \"date\": \"2028-09-06\",\n      \"tmin_c\": 9,\n      \"tmax_c\": 21\n    },\n    {\n      \"date\": \"2028-09-07\",\n      \"tmin_c\": 10,\n      \"tmax_c\": 22\n    },\n    {\n      \"date\": \"2028-09-08\",\n      \"tmin_c\": 11,\n      \"tmax_c\": 23\n    },\n    {\n      \"date\": \"2028-09-09\",\n      \"tmin_c\": 12,\n      \"tmax_c\": 24\n    }\n  ]\n}",
+     "backendBodySha256": "9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab",
+     "bodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2"
+    },
+    "question": "Does this backend response deliver what the invoked request asked for?"
+   },
+   "deliveryRecordJcs": "{\"question\":\"Does this backend response deliver what the invoked request asked for?\",\"quote\":{\"quoteDigest\":\"0x48f1be2181771208981ebac78f2c01a5f224c7942e6149085c3e0f05dc81948f\"},\"request\":{\"invokeBodySha256\":\"cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154\"},\"response\":{\"backendBody\":\"{\\n  \\\"city\\\": \\\"Santiago\\\",\\n  \\\"days\\\": 7,\\n  \\\"forecast\\\": [\\n    {\\n      \\\"date\\\": \\\"2028-09-03\\\",\\n      \\\"tmin_c\\\": 6,\\n      \\\"tmax_c\\\": 18\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-04\\\",\\n      \\\"tmin_c\\\": 7,\\n      \\\"tmax_c\\\": 19\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-05\\\",\\n      \\\"tmin_c\\\": 8,\\n      \\\"tmax_c\\\": 20\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-06\\\",\\n      \\\"tmin_c\\\": 9,\\n      \\\"tmax_c\\\": 21\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-07\\\",\\n      \\\"tmin_c\\\": 10,\\n      \\\"tmax_c\\\": 22\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-08\\\",\\n      \\\"tmin_c\\\": 11,\\n      \\\"tmax_c\\\": 23\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-09\\\",\\n      \\\"tmin_c\\\": 12,\\n      \\\"tmax_c\\\": 24\\n    }\\n  ]\\n}\",\"backendBodySha256\":\"9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab\",\"bodyJcsSha256\":\"99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2\",\"contentType\":\"application/json\",\"status\":200},\"scheme\":\"invinoveritas.delivery-record/2-acg-draft\"}",
+   "deliveredBody": "{\"city\":\"Santiago\",\"days\":7,\"forecast\":[{\"date\":\"2028-09-03\",\"tmin_c\":6,\"tmax_c\":18},{\"date\":\"2028-09-04\",\"tmin_c\":7,\"tmax_c\":19},{\"date\":\"2028-09-05\",\"tmin_c\":8,\"tmax_c\":20}]}",
+   "receiptMetadata": {
+    "deliveryVerdict": {
+     "scheme": "invinoveritas.delivery-verdict/2-acg-draft",
+     "deliveryRecordSha256": "06b69d8b2a425e0ddec3bf7edd795bc5c20262600fb0e31b42c7c5d4683bb733",
+     "deliveredBodySha256": "7ac811b956171bc0819d6f70337503247b0e83d9bb9a5389cf8ecbb616ad5c86",
+     "deliveredBodyJcsSha256": "f35a3686b1bde327d72202bce746e88da520e9b9bfda0439ac08e5b17e376c2b",
+     "verdict": "approve_with_concerns",
+     "proofEventId": "e13737dc8009e1d6f2adb5d55c013c545e9218e5ff7fac27da6c855e319ea4b4",
+     "proof": {
+      "id": "e13737dc8009e1d6f2adb5d55c013c545e9218e5ff7fac27da6c855e319ea4b4",
+      "pubkey": "6786e18a864893a900bd9858e650f67ccc3513f248fed374b591e2ff6922fbb7",
+      "created_at": 1791834381,
+      "kind": 30078,
+      "tags": [
+       [
+        "d",
+        "invinoveritas-proof-06b69d8b2a425e0ddec3bf7edd795bc5c20262600fb0e31b42c7c5d4683bb733-1791834381-6ff85402"
+       ],
+       [
+        "t",
+        "invinoveritas"
+       ],
+       [
+        "t",
+        "proof"
+       ],
+       [
+        "schema",
+        "invinoveritas.verdict_proof.v1"
+       ]
+      ],
+      "content": "{\"artifact_hash\":\"06b69d8b2a425e0ddec3bf7edd795bc5c20262600fb0e31b42c7c5d4683bb733\",\"artifact_type\":\"agent_output\",\"canonicalization_version\":\"rfc8785.v1\",\"confidence\":0.91,\"conformance_suite\":\"https://github.com/babyblueviper1/preaction-governance-conformance\",\"context_provenance\":\"caller_asserted_unverified\",\"decision_ref\":\"sha256:b1cd96f7e17241804b9a8b8eb6855a5a59b870108b2db76c9a8807a7f4970c22\",\"decision_ref_preimage_fields\":[\"artifact_hash\",\"artifact_type\",\"policy_version\",\"verdict\",\"source_class\",\"vantage_limitation\",\"related_decision_ref\",\"intended_audience\",\"confidentiality_tier\",\"disclosed_summary\",\"intended_verifier\",\"policy_commitment\",\"verified_at\",\"registry_as_of\",\"registry_snapshot_sha256\",\"action_binding_tool_hash\",\"action_binding_args_hash\",\"action_binding_agent_id\",\"action_binding_nonce\",\"freshness_beacon_hash\",\"epistemic_basis\",\"external_evidence_hash\",\"canonicalization_version\",\"related_claims_hash\",\"related_claims_result\",\"related_claims_comparison_version\",\"mediator_attestation_hash\"],\"decision_ref_preimage_rule\":\"every name in decision_ref_preimage_fields is a key in the hashed preimage object, always -- absent fields (e.g. vantage_limitation when not applicable) are present as JSON null, never omitted from the object.\",\"engine_generation\":1,\"epistemic_basis\":null,\"freshness_beacon\":{\"block_time\":1791832325,\"hash\":\"000000000000000000015011b8741c77cd0c62cc7a60caaa3bbf977623106ab2\",\"height\":971130,\"source\":\"bitcoin\"},\"freshness_beacon_hash\":\"sha256:863612bf7679ee33bf9656117e797016f97ef501cf5ffd82b947c85773702599\",\"independent_nodes\":[\"https://invinoveritas-castra.babyblueviper.workers.dev/verify\",\"https://babyblueviper1--2aba75da693711f185891607ee4eb77e.web.val.run\"],\"key_id\":\"6786e18a864893a900bd9858e650f67ccc3513f248fed374b591e2ff6922fbb7\",\"platform\":\"invinoveritas\",\"policy_commitment\":\"sha256:ce58857dea9f9851394bd3126f9aca28b8ef7cc95cc3562ab0e4a863f8be73fe\",\"policy_commitment_inputs\":{\"conformance_suite_commit\":\"e90948ed3eb9d36eb1d0997ea4d02045e28a405a\",\"conformance_suite_repo\":\"babyblueviper1/preaction-governance-conformance\",\"rubric_doc_path\":\"docs/policy_spec/invinoveritas.review.v12.md\",\"rubric_sha256\":\"bb74afa68bd5e8b1ca1038d8f0c8cd9a0d1f83888a7ea7df7c551f579a974180\"},\"policy_version\":\"invinoveritas.review.v22\",\"registry_as_of\":null,\"registry_snapshot_sha256\":null,\"related_claims_result\":\"not_supplied\",\"review_model_hash\":\"deda3dc02a1d1575f15d5c9f9b3e31cf0c768a55508c31e7ff0f4fc8f33fc669\",\"review_prompt_template_hash\":\"13a72a4c1e3a99b969ac46b724eceef6620716292f2b730f19915cdd469c1e31\",\"schema\":\"invinoveritas.verdict_proof.v1\",\"source_class\":\"agent_reported\",\"summary_hash\":\"848552d8f4efa41db27dd960d0f3589a26a9a92998cf24e12c9a363be94fc398\",\"verdict\":\"approve_with_concerns\",\"verified_at\":1791834380,\"verifier_keys\":\"https://api.babyblueviper.com/.well-known/verifier-keys.json\",\"verifier_pubkey\":\"6786e18a864893a900bd9858e650f67ccc3513f248fed374b591e2ff6922fbb7\",\"verify_how\":\"Easiest: install the offline verifier above and recompute locally. Or POST this proof's signed `event` to verify_url (or an independent_node), OR run NIP-01 yourself: recompute the Nostr event id = sha256([0,pubkey,created_at,kind,tags,content]), verify the schnorr signature against verifier_pubkey. valid \u21d2 invinoveritas issued this, untampered. No trust required.\",\"verify_offline\":\"npm i invinoveritas-verify  \u00b7  pip install invinoveritas-verify  \u2014 recompute this proof on your own machine against verifier_pubkey; you never have to call us.\",\"verify_url\":\"https://api.babyblueviper.com/verify-proof\"}",
+      "sig": "91d3fe3e6e9ed8ccfc621ab06eb30100d2c347077e93aad14cfcd8929af0efedd9380d9f0e9e3eb723c50587717ed7884d577182d85ecf7aecacc56fdb540366"
+     }
+    }
+   }
+  },
+  "no_quote_yet": {
+   "deliveryRecord": {
+    "scheme": "invinoveritas.delivery-record/2-acg-draft",
+    "quote": {
+     "quoteDigest": null
+    },
+    "request": {
+     "invokeBodySha256": "cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154"
+    },
+    "response": {
+     "status": 200,
+     "contentType": "application/json",
+     "backendBody": "{\n  \"city\": \"Santiago\",\n  \"days\": 7,\n  \"forecast\": [\n    {\n      \"date\": \"2028-09-03\",\n      \"tmin_c\": 6,\n      \"tmax_c\": 18\n    },\n    {\n      \"date\": \"2028-09-04\",\n      \"tmin_c\": 7,\n      \"tmax_c\": 19\n    },\n    {\n      \"date\": \"2028-09-05\",\n      \"tmin_c\": 8,\n      \"tmax_c\": 20\n    },\n    {\n      \"date\": \"2028-09-06\",\n      \"tmin_c\": 9,\n      \"tmax_c\": 21\n    },\n    {\n      \"date\": \"2028-09-07\",\n      \"tmin_c\": 10,\n      \"tmax_c\": 22\n    },\n    {\n      \"date\": \"2028-09-08\",\n      \"tmin_c\": 11,\n      \"tmax_c\": 23\n    },\n    {\n      \"date\": \"2028-09-09\",\n      \"tmin_c\": 12,\n      \"tmax_c\": 24\n    }\n  ]\n}",
+     "backendBodySha256": "9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab",
+     "bodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2"
+    },
+    "question": "Does this backend response deliver what the invoked request asked for?"
+   },
+   "deliveryRecordJcs": "{\"question\":\"Does this backend response deliver what the invoked request asked for?\",\"quote\":{\"quoteDigest\":null},\"request\":{\"invokeBodySha256\":\"cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154\"},\"response\":{\"backendBody\":\"{\\n  \\\"city\\\": \\\"Santiago\\\",\\n  \\\"days\\\": 7,\\n  \\\"forecast\\\": [\\n    {\\n      \\\"date\\\": \\\"2028-09-03\\\",\\n      \\\"tmin_c\\\": 6,\\n      \\\"tmax_c\\\": 18\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-04\\\",\\n      \\\"tmin_c\\\": 7,\\n      \\\"tmax_c\\\": 19\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-05\\\",\\n      \\\"tmin_c\\\": 8,\\n      \\\"tmax_c\\\": 20\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-06\\\",\\n      \\\"tmin_c\\\": 9,\\n      \\\"tmax_c\\\": 21\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-07\\\",\\n      \\\"tmin_c\\\": 10,\\n      \\\"tmax_c\\\": 22\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-08\\\",\\n      \\\"tmin_c\\\": 11,\\n      \\\"tmax_c\\\": 23\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-09\\\",\\n      \\\"tmin_c\\\": 12,\\n      \\\"tmax_c\\\": 24\\n    }\\n  ]\\n}\",\"backendBodySha256\":\"9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab\",\"bodyJcsSha256\":\"99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2\",\"contentType\":\"application/json\",\"status\":200},\"scheme\":\"invinoveritas.delivery-record/2-acg-draft\"}",
+   "deliveredBody": "{\"city\":\"Santiago\",\"days\":7,\"forecast\":[{\"date\":\"2028-09-03\",\"tmin_c\":6,\"tmax_c\":18},{\"date\":\"2028-09-04\",\"tmin_c\":7,\"tmax_c\":19},{\"date\":\"2028-09-05\",\"tmin_c\":8,\"tmax_c\":20},{\"date\":\"2028-09-06\",\"tmin_c\":9,\"tmax_c\":21},{\"date\":\"2028-09-07\",\"tmin_c\":10,\"tmax_c\":22},{\"date\":\"2028-09-08\",\"tmin_c\":11,\"tmax_c\":23},{\"date\":\"2028-09-09\",\"tmin_c\":12,\"tmax_c\":24}]}",
+   "receiptMetadata": {
+    "deliveryVerdict": {
+     "scheme": "invinoveritas.delivery-verdict/2-acg-draft",
+     "deliveryRecordSha256": "0f9a4c64abe0f19d8a31a70cc1e4bc2aec6cbabd0b42facd8c2af18fe886e8e8",
+     "deliveredBodySha256": "8669da0054ee1482169b860e36d4195646a915659703c47abd076a684ba6c299",
+     "deliveredBodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2",
+     "verdict": "approve",
+     "proofEventId": "c8815d5ad55e0d2e27c793d6ff10307c3ecc80f6e28370fd767ebf93ce0ceda9",
+     "proof": {
+      "id": "c8815d5ad55e0d2e27c793d6ff10307c3ecc80f6e28370fd767ebf93ce0ceda9",
+      "pubkey": "6786e18a864893a900bd9858e650f67ccc3513f248fed374b591e2ff6922fbb7",
+      "created_at": 1791834386,
+      "kind": 30078,
+      "tags": [
+       [
+        "d",
+        "invinoveritas-proof-0f9a4c64abe0f19d8a31a70cc1e4bc2aec6cbabd0b42facd8c2af18fe886e8e8-1791834386-5d33a69a"
+       ],
+       [
+        "t",
+        "invinoveritas"
+       ],
+       [
+        "t",
+        "proof"
+       ],
+       [
+        "schema",
+        "invinoveritas.verdict_proof.v1"
+       ]
+      ],
+      "content": "{\"artifact_hash\":\"0f9a4c64abe0f19d8a31a70cc1e4bc2aec6cbabd0b42facd8c2af18fe886e8e8\",\"artifact_type\":\"agent_output\",\"canonicalization_version\":\"rfc8785.v1\",\"confidence\":0.98,\"conformance_suite\":\"https://github.com/babyblueviper1/preaction-governance-conformance\",\"context_provenance\":\"caller_asserted_unverified\",\"decision_ref\":\"sha256:97d43779cf47c6b49cc6a0b70ce7794282dee771020f56e32aeadea537bf9ca4\",\"decision_ref_preimage_fields\":[\"artifact_hash\",\"artifact_type\",\"policy_version\",\"verdict\",\"source_class\",\"vantage_limitation\",\"related_decision_ref\",\"intended_audience\",\"confidentiality_tier\",\"disclosed_summary\",\"intended_verifier\",\"policy_commitment\",\"verified_at\",\"registry_as_of\",\"registry_snapshot_sha256\",\"action_binding_tool_hash\",\"action_binding_args_hash\",\"action_binding_agent_id\",\"action_binding_nonce\",\"freshness_beacon_hash\",\"epistemic_basis\",\"external_evidence_hash\",\"canonicalization_version\",\"related_claims_hash\",\"related_claims_result\",\"related_claims_comparison_version\",\"mediator_attestation_hash\"],\"decision_ref_preimage_rule\":\"every name in decision_ref_preimage_fields is a key in the hashed preimage object, always -- absent fields (e.g. vantage_limitation when not applicable) are present as JSON null, never omitted from the object.\",\"engine_generation\":1,\"epistemic_basis\":null,\"freshness_beacon\":{\"block_time\":1791832325,\"hash\":\"000000000000000000015011b8741c77cd0c62cc7a60caaa3bbf977623106ab2\",\"height\":971130,\"source\":\"bitcoin\"},\"freshness_beacon_hash\":\"sha256:863612bf7679ee33bf9656117e797016f97ef501cf5ffd82b947c85773702599\",\"independent_nodes\":[\"https://invinoveritas-castra.babyblueviper.workers.dev/verify\",\"https://babyblueviper1--2aba75da693711f185891607ee4eb77e.web.val.run\"],\"key_id\":\"6786e18a864893a900bd9858e650f67ccc3513f248fed374b591e2ff6922fbb7\",\"platform\":\"invinoveritas\",\"policy_commitment\":\"sha256:ce58857dea9f9851394bd3126f9aca28b8ef7cc95cc3562ab0e4a863f8be73fe\",\"policy_commitment_inputs\":{\"conformance_suite_commit\":\"e90948ed3eb9d36eb1d0997ea4d02045e28a405a\",\"conformance_suite_repo\":\"babyblueviper1/preaction-governance-conformance\",\"rubric_doc_path\":\"docs/policy_spec/invinoveritas.review.v12.md\",\"rubric_sha256\":\"bb74afa68bd5e8b1ca1038d8f0c8cd9a0d1f83888a7ea7df7c551f579a974180\"},\"policy_version\":\"invinoveritas.review.v22\",\"registry_as_of\":null,\"registry_snapshot_sha256\":null,\"related_claims_result\":\"not_supplied\",\"review_model_hash\":\"deda3dc02a1d1575f15d5c9f9b3e31cf0c768a55508c31e7ff0f4fc8f33fc669\",\"review_prompt_template_hash\":\"13a72a4c1e3a99b969ac46b724eceef6620716292f2b730f19915cdd469c1e31\",\"schema\":\"invinoveritas.verdict_proof.v1\",\"source_class\":\"agent_reported\",\"summary_hash\":\"15b9930344f2335554dac6252b06cacf21895622712370eb98c00514f1aa546d\",\"verdict\":\"approve\",\"verified_at\":1791834386,\"verifier_keys\":\"https://api.babyblueviper.com/.well-known/verifier-keys.json\",\"verifier_pubkey\":\"6786e18a864893a900bd9858e650f67ccc3513f248fed374b591e2ff6922fbb7\",\"verify_how\":\"Easiest: install the offline verifier above and recompute locally. Or POST this proof's signed `event` to verify_url (or an independent_node), OR run NIP-01 yourself: recompute the Nostr event id = sha256([0,pubkey,created_at,kind,tags,content]), verify the schnorr signature against verifier_pubkey. valid \u21d2 invinoveritas issued this, untampered. No trust required.\",\"verify_offline\":\"npm i invinoveritas-verify  \u00b7  pip install invinoveritas-verify  \u2014 recompute this proof on your own machine against verifier_pubkey; you never have to call us.\",\"verify_url\":\"https://api.babyblueviper.com/verify-proof\"}",
+      "sig": "f68e9610ac91bdb81ead220c865f4635fbc88e8811888e3a08fc9e8b6ba9d6325a9b8e8b485f7e4db4d83f6f1198576956245cdb6ac795a6b9218a5efe3d9308"
+     }
+    }
+   }
+  }
+ },
+ "invokeBody": "{\"city\":\"Santiago\",\"days\":7}"
+}

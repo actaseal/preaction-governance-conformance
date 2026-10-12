@@ -1,0 +1,92 @@
+{
+ "invokeBody": "{\"city\":\"Santiago\",\"days\":7}",
+ "cases": {
+  "delivered_reserialized": {
+   "deliveryRecord": {
+    "scheme": "invinoveritas.delivery-record/2-acg-draft",
+    "quote": {
+     "quoteDigest": "0x48f1be2181771208981ebac78f2c01a5f224c7942e6149085c3e0f05dc81948f"
+    },
+    "request": {
+     "invokeBodySha256": "cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154"
+    },
+    "response": {
+     "status": 200,
+     "contentType": "application/json",
+     "backendBody": "{\n  \"city\": \"Santiago\",\n  \"days\": 7,\n  \"forecast\": [\n    {\n      \"date\": \"2028-09-03\",\n      \"tmin_c\": 6,\n      \"tmax_c\": 18\n    },\n    {\n      \"date\": \"2028-09-04\",\n      \"tmin_c\": 7,\n      \"tmax_c\": 19\n    },\n    {\n      \"date\": \"2028-09-05\",\n      \"tmin_c\": 8,\n      \"tmax_c\": 20\n    },\n    {\n      \"date\": \"2028-09-06\",\n      \"tmin_c\": 9,\n      \"tmax_c\": 21\n    },\n    {\n      \"date\": \"2028-09-07\",\n      \"tmin_c\": 10,\n      \"tmax_c\": 22\n    },\n    {\n      \"date\": \"2028-09-08\",\n      \"tmin_c\": 11,\n      \"tmax_c\": 23\n    },\n    {\n      \"date\": \"2028-09-09\",\n      \"tmin_c\": 12,\n      \"tmax_c\": 24\n    }\n  ]\n}",
+     "backendBodySha256": "9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab",
+     "bodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2"
+    },
+    "question": "Does this backend response deliver what the invoked request asked for?"
+   },
+   "deliveryRecordJcs": "{\"question\":\"Does this backend response deliver what the invoked request asked for?\",\"quote\":{\"quoteDigest\":\"0x48f1be2181771208981ebac78f2c01a5f224c7942e6149085c3e0f05dc81948f\"},\"request\":{\"invokeBodySha256\":\"cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154\"},\"response\":{\"backendBody\":\"{\\n  \\\"city\\\": \\\"Santiago\\\",\\n  \\\"days\\\": 7,\\n  \\\"forecast\\\": [\\n    {\\n      \\\"date\\\": \\\"2028-09-03\\\",\\n      \\\"tmin_c\\\": 6,\\n      \\\"tmax_c\\\": 18\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-04\\\",\\n      \\\"tmin_c\\\": 7,\\n      \\\"tmax_c\\\": 19\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-05\\\",\\n      \\\"tmin_c\\\": 8,\\n      \\\"tmax_c\\\": 20\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-06\\\",\\n      \\\"tmin_c\\\": 9,\\n      \\\"tmax_c\\\": 21\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-07\\\",\\n      \\\"tmin_c\\\": 10,\\n      \\\"tmax_c\\\": 22\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-08\\\",\\n      \\\"tmin_c\\\": 11,\\n      \\\"tmax_c\\\": 23\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-09\\\",\\n      \\\"tmin_c\\\": 12,\\n      \\\"tmax_c\\\": 24\\n    }\\n  ]\\n}\",\"backendBodySha256\":\"9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab\",\"bodyJcsSha256\":\"99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2\",\"contentType\":\"application/json\",\"status\":200},\"scheme\":\"invinoveritas.delivery-record/2-acg-draft\"}",
+   "deliveredBody": "{\"city\":\"Santiago\",\"days\":7,\"forecast\":[{\"date\":\"2028-09-03\",\"tmin_c\":6,\"tmax_c\":18},{\"date\":\"2028-09-04\",\"tmin_c\":7,\"tmax_c\":19},{\"date\":\"2028-09-05\",\"tmin_c\":8,\"tmax_c\":20},{\"date\":\"2028-09-06\",\"tmin_c\":9,\"tmax_c\":21},{\"date\":\"2028-09-07\",\"tmin_c\":10,\"tmax_c\":22},{\"date\":\"2028-09-08\",\"tmin_c\":11,\"tmax_c\":23},{\"date\":\"2028-09-09\",\"tmin_c\":12,\"tmax_c\":24}]}",
+   "receiptMetadata": {
+    "deliveryVerdict": {
+     "scheme": "invinoveritas.delivery-verdict/2-acg-draft",
+     "deliveryRecordSha256": "06b69d8b2a425e0ddec3bf7edd795bc5c20262600fb0e31b42c7c5d4683bb733",
+     "deliveredBodySha256": "8669da0054ee1482169b860e36d4195646a915659703c47abd076a684ba6c299",
+     "deliveredBodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2"
+    }
+   }
+  },
+  "gateway_altered": {
+   "deliveryRecord": {
+    "scheme": "invinoveritas.delivery-record/2-acg-draft",
+    "quote": {
+     "quoteDigest": "0x48f1be2181771208981ebac78f2c01a5f224c7942e6149085c3e0f05dc81948f"
+    },
+    "request": {
+     "invokeBodySha256": "cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154"
+    },
+    "response": {
+     "status": 200,
+     "contentType": "application/json",
+     "backendBody": "{\n  \"city\": \"Santiago\",\n  \"days\": 7,\n  \"forecast\": [\n    {\n      \"date\": \"2028-09-03\",\n      \"tmin_c\": 6,\n      \"tmax_c\": 18\n    },\n    {\n      \"date\": \"2028-09-04\",\n      \"tmin_c\": 7,\n      \"tmax_c\": 19\n    },\n    {\n      \"date\": \"2028-09-05\",\n      \"tmin_c\": 8,\n      \"tmax_c\": 20\n    },\n    {\n      \"date\": \"2028-09-06\",\n      \"tmin_c\": 9,\n      \"tmax_c\": 21\n    },\n    {\n      \"date\": \"2028-09-07\",\n      \"tmin_c\": 10,\n      \"tmax_c\": 22\n    },\n    {\n      \"date\": \"2028-09-08\",\n      \"tmin_c\": 11,\n      \"tmax_c\": 23\n    },\n    {\n      \"date\": \"2028-09-09\",\n      \"tmin_c\": 12,\n      \"tmax_c\": 24\n    }\n  ]\n}",
+     "backendBodySha256": "9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab",
+     "bodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2"
+    },
+    "question": "Does this backend response deliver what the invoked request asked for?"
+   },
+   "deliveryRecordJcs": "{\"question\":\"Does this backend response deliver what the invoked request asked for?\",\"quote\":{\"quoteDigest\":\"0x48f1be2181771208981ebac78f2c01a5f224c7942e6149085c3e0f05dc81948f\"},\"request\":{\"invokeBodySha256\":\"cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154\"},\"response\":{\"backendBody\":\"{\\n  \\\"city\\\": \\\"Santiago\\\",\\n  \\\"days\\\": 7,\\n  \\\"forecast\\\": [\\n    {\\n      \\\"date\\\": \\\"2028-09-03\\\",\\n      \\\"tmin_c\\\": 6,\\n      \\\"tmax_c\\\": 18\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-04\\\",\\n      \\\"tmin_c\\\": 7,\\n      \\\"tmax_c\\\": 19\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-05\\\",\\n      \\\"tmin_c\\\": 8,\\n      \\\"tmax_c\\\": 20\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-06\\\",\\n      \\\"tmin_c\\\": 9,\\n      \\\"tmax_c\\\": 21\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-07\\\",\\n      \\\"tmin_c\\\": 10,\\n      \\\"tmax_c\\\": 22\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-08\\\",\\n      \\\"tmin_c\\\": 11,\\n      \\\"tmax_c\\\": 23\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-09\\\",\\n      \\\"tmin_c\\\": 12,\\n      \\\"tmax_c\\\": 24\\n    }\\n  ]\\n}\",\"backendBodySha256\":\"9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab\",\"bodyJcsSha256\":\"99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2\",\"contentType\":\"application/json\",\"status\":200},\"scheme\":\"invinoveritas.delivery-record/2-acg-draft\"}",
+   "deliveredBody": "{\"city\":\"Santiago\",\"days\":7,\"forecast\":[{\"date\":\"2028-09-03\",\"tmin_c\":6,\"tmax_c\":18},{\"date\":\"2028-09-04\",\"tmin_c\":7,\"tmax_c\":19},{\"date\":\"2028-09-05\",\"tmin_c\":8,\"tmax_c\":20}]}",
+   "receiptMetadata": {
+    "deliveryVerdict": {
+     "scheme": "invinoveritas.delivery-verdict/2-acg-draft",
+     "deliveryRecordSha256": "06b69d8b2a425e0ddec3bf7edd795bc5c20262600fb0e31b42c7c5d4683bb733",
+     "deliveredBodySha256": "7ac811b956171bc0819d6f70337503247b0e83d9bb9a5389cf8ecbb616ad5c86",
+     "deliveredBodyJcsSha256": "f35a3686b1bde327d72202bce746e88da520e9b9bfda0439ac08e5b17e376c2b"
+    }
+   }
+  },
+  "no_quote_yet": {
+   "deliveryRecord": {
+    "scheme": "invinoveritas.delivery-record/2-acg-draft",
+    "quote": {
+     "quoteDigest": null
+    },
+    "request": {
+     "invokeBodySha256": "cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154"
+    },
+    "response": {
+     "status": 200,
+     "contentType": "application/json",
+     "backendBody": "{\n  \"city\": \"Santiago\",\n  \"days\": 7,\n  \"forecast\": [\n    {\n      \"date\": \"2028-09-03\",\n      \"tmin_c\": 6,\n      \"tmax_c\": 18\n    },\n    {\n      \"date\": \"2028-09-04\",\n      \"tmin_c\": 7,\n      \"tmax_c\": 19\n    },\n    {\n      \"date\": \"2028-09-05\",\n      \"tmin_c\": 8,\n      \"tmax_c\": 20\n    },\n    {\n      \"date\": \"2028-09-06\",\n      \"tmin_c\": 9,\n      \"tmax_c\": 21\n    },\n    {\n      \"date\": \"2028-09-07\",\n      \"tmin_c\": 10,\n      \"tmax_c\": 22\n    },\n    {\n      \"date\": \"2028-09-08\",\n      \"tmin_c\": 11,\n      \"tmax_c\": 23\n    },\n    {\n      \"date\": \"2028-09-09\",\n      \"tmin_c\": 12,\n      \"tmax_c\": 24\n    }\n  ]\n}",
+     "backendBodySha256": "9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab",
+     "bodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2"
+    },
+    "question": "Does this backend response deliver what the invoked request asked for?"
+   },
+   "deliveryRecordJcs": "{\"question\":\"Does this backend response deliver what the invoked request asked for?\",\"quote\":{\"quoteDigest\":null},\"request\":{\"invokeBodySha256\":\"cc17bee0f977ba9d14f619116302fa704a4b95e7ebfd15e38bdee44909d18154\"},\"response\":{\"backendBody\":\"{\\n  \\\"city\\\": \\\"Santiago\\\",\\n  \\\"days\\\": 7,\\n  \\\"forecast\\\": [\\n    {\\n      \\\"date\\\": \\\"2028-09-03\\\",\\n      \\\"tmin_c\\\": 6,\\n      \\\"tmax_c\\\": 18\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-04\\\",\\n      \\\"tmin_c\\\": 7,\\n      \\\"tmax_c\\\": 19\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-05\\\",\\n      \\\"tmin_c\\\": 8,\\n      \\\"tmax_c\\\": 20\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-06\\\",\\n      \\\"tmin_c\\\": 9,\\n      \\\"tmax_c\\\": 21\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-07\\\",\\n      \\\"tmin_c\\\": 10,\\n      \\\"tmax_c\\\": 22\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-08\\\",\\n      \\\"tmin_c\\\": 11,\\n      \\\"tmax_c\\\": 23\\n    },\\n    {\\n      \\\"date\\\": \\\"2028-09-09\\\",\\n      \\\"tmin_c\\\": 12,\\n      \\\"tmax_c\\\": 24\\n    }\\n  ]\\n}\",\"backendBodySha256\":\"9ce87ea2765489814e2731d4847337453674a466f483f92fc3347b3d7eb211ab\",\"bodyJcsSha256\":\"99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2\",\"contentType\":\"application/json\",\"status\":200},\"scheme\":\"invinoveritas.delivery-record/2-acg-draft\"}",
+   "deliveredBody": "{\"city\":\"Santiago\",\"days\":7,\"forecast\":[{\"date\":\"2028-09-03\",\"tmin_c\":6,\"tmax_c\":18},{\"date\":\"2028-09-04\",\"tmin_c\":7,\"tmax_c\":19},{\"date\":\"2028-09-05\",\"tmin_c\":8,\"tmax_c\":20},{\"date\":\"2028-09-06\",\"tmin_c\":9,\"tmax_c\":21},{\"date\":\"2028-09-07\",\"tmin_c\":10,\"tmax_c\":22},{\"date\":\"2028-09-08\",\"tmin_c\":11,\"tmax_c\":23},{\"date\":\"2028-09-09\",\"tmin_c\":12,\"tmax_c\":24}]}",
+   "receiptMetadata": {
+    "deliveryVerdict": {
+     "scheme": "invinoveritas.delivery-verdict/2-acg-draft",
+     "deliveryRecordSha256": "0f9a4c64abe0f19d8a31a70cc1e4bc2aec6cbabd0b42facd8c2af18fe886e8e8",
+     "deliveredBodySha256": "8669da0054ee1482169b860e36d4195646a915659703c47abd076a684ba6c299",
+     "deliveredBodyJcsSha256": "99d3ea58d35107e36abc1b7e6f9c34edb271231617a4df4b3acec008de3a47f2"
+    }
+   }
+  }
+ }
+}
