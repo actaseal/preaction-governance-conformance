@@ -124,6 +124,71 @@ add("acc-signature-invalid-one-byte-flipped", case(flip_sig_byte(SAME)), "malfor
     what="-03 5.4.2(c): the SAME record with cp-1 resolvable and the first signature byte XOR 0x01; "
     "signature_invalid is the only condition reported")
 
+# The four README sentences under "Inputs the vectors do not yet pin" (tsc#4, 2026-10-12). Each vector changes one thing in
+# acc-accepted-verified (SAME): one signed member or one envelope field, re-signed by cp-1 where the signed bytes change, or one
+# trust-material key; the exceptions are noted. Expectations are written by hand from those sentences.
+add("acc-extra-signed-member-ignored", case(jws(body(note="extra member, signed"))), "verified", disposition="accepted",
+    what="sentence 1: a signed member other than the seven the vectors use is ignored")
+add("acc-envelope-signature-padded", case({**SAME, "signature": SAME["signature"] + "=" * (-len(SAME["signature"]) % 4)}),
+    "malformed", ["acceptance_member_invalid"], what="sentence 2: the same signature with base64 '=' padding is not base64url "
+    "without padding (RFC 7515 2); found before the key step")
+add("acc-envelope-signature-standard-alphabet", case({**SAME, "signature": SAME["signature"].replace("-", "+").replace("_", "/")}),
+    "malformed", ["acceptance_member_invalid"], what="sentence 2: the same signature bytes in the standard base64 alphabet "
+    "('+' for '-') are not base64url; found before the key step")
+
+
+def jws_raw_protected(prot_raw, body, sk=CP_SK):
+    prot = b64(prot_raw)
+    pay = b64(json.dumps(body, sort_keys=True, separators=(",", ":")).encode())
+    return {"protected": prot, "payload": pay, "signature": b64(sk.sign(f"{prot}.{pay}".encode()))}
+
+
+add("acc-envelope-protected-not-json-object", case(jws_raw_protected(b'["EdDSA","cp-1"]', BODY)), "malformed",
+    ["acceptance_member_invalid"], what="sentence 2: the protected header decodes to a JSON array, not an object; found before "
+    "the key step")
+NOT_OBJECT = jws(None, raw_payload=b"[]")
+add("acc-envelope-payload-not-json-object", case(NOT_OBJECT), "malformed", ["acceptance_member_invalid"],
+    what="sentence 2: the payload is validly signed by cp-1 and decodes to a JSON array, not an object")
+add("acc-envelope-payload-not-json-object-signature-invalid", case(flip_sig_byte(NOT_OBJECT)), "malformed", ["signature_invalid"],
+    key_step="signature_invalid", what="README order note: a payload that decodes but is not a JSON object is found after the "
+    "key step, so with the first signature byte XOR 0x01 the result is signature_invalid")
+add("acc-version-absent", case(jws(body(acceptance_version=KeyError))), "malformed", ["acceptance_member_invalid"],
+    what="sentence 3: acceptance_version is required")
+add("acc-version-not-string", case(jws(body(acceptance_version=0))), "malformed", ["acceptance_member_invalid"],
+    what="sentence 3: acceptance_version present but not a string")
+add("acc-version-other-value", case(jws(body(acceptance_version="acceptance-record-v1"))), "malformed", ["acceptance_member_invalid"],
+    what="sentence 3: any value other than acceptance-record-v0 is malformed, not unknown")
+
+# Sentence 4. Small-order points (order divides 8): the identity, and a point of order 8. Under the identity key,
+# R = identity and S = 0 satisfies [S]B = R + [k]A for every message.
+IDENTITY = bytes([1]) + bytes(31)
+ORDER8 = bytes.fromhex("26e8958fc2b227b045c3f489f2ef98f0d5dfac05d3c63339b13802886d53fc05")
+
+
+def jwks_cp1(x):
+    return {"keys": [jwk(k["kid"], x) if k["kid"] == "cp-1" else k for k in JWKS["keys"]]}
+
+
+FORGED = {**SAME, "signature": b64(IDENTITY + bytes(32))}
+add("acc-small-order-key-identity-forged-signature", {**case(FORGED), "trust_material": jwks_cp1(IDENTITY)}, "key_unresolved", [],
+    key_step="key_unresolved", what="sentence 4: cp-1's key is the identity point and the signature is R = identity, S = 0 "
+    "(two inputs change: the key and the signature); the key is not a key of the confirming party, so no check ran")
+add("acc-small-order-key-identity-declared-complete", {**case(FORGED, complete=True), "trust_material": jwks_cp1(IDENTITY)},
+    "key_unresolved", [], key_step="key_unresolved", policy_refusal=True,
+    what="sentence 4: the previous vector with trust material declared complete: same token, plus policy_refusal (5.4.2(b))")
+add("acc-small-order-key-order-8-genuine-signature", {**case(SAME), "trust_material": jwks_cp1(ORDER8)}, "key_unresolved", [],
+    key_step="key_unresolved", what="sentence 4: cp-1's key replaced by a point of order 8; the record and signature are SAME")
+
+# A small-order R under cp-1's real key. R = identity, S = k*a mod L (a = cp-1's secret scalar, k = SHA-512(R || A || M) mod L)
+# satisfies [S]B = R + [k]A, and so also the cofactored equation of RFC 8032 5.1.7: it fails by the small-order-R refusal.
+L = 2 ** 252 + 27742317777372353535851937790883648493
+_h = hashlib.sha512(hashlib.sha256(b"acceptance-vectors/counterparty").digest()).digest()
+_a = int.from_bytes(_h[:32], "little") & ((1 << 254) - 8) | (1 << 254)
+_k = int.from_bytes(hashlib.sha512(IDENTITY + CP_PK + f"{SAME['protected']}.{SAME['payload']}".encode()).digest(), "little") % L
+add("acc-small-order-r-real-key", case({**SAME, "signature": b64(IDENTITY + ((_k * _a) % L).to_bytes(32, "little"))}), "malformed",
+    ["signature_invalid"], key_step="signature_invalid", what="sentence 4: cp-1's real key; signature R = identity, S = k*a mod L, "
+    "which passes [S]B = R + [k]A; a small-order R is signature_invalid")
+
 out = {"description": "Acceptance-record vectors for Shodai's condition set (x402-foundation/tsc#4, 2026-10-04), keys per "
        "draft-krausz-verification-state-03 5.4.2. Conditions compare as SETS. Built by build_vectors.py; CC0-1.0.",
        "vectors": V}
