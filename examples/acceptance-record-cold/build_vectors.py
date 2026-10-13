@@ -204,6 +204,14 @@ add("acc-small-order-r-real-key", case({**SAME, "signature": b64(IDENTITY + ((_k
     ["signature_invalid"], key_step="signature_invalid", what="sentence 4: cp-1's real key; signature R = identity, S = k*a mod L, "
     "which passes [S]B = R + [k]A; a small-order R is signature_invalid")
 
+# Sentence 7: confirming_party is compared byte-exact and is NOT trimmed, so a
+# whitespace-only value is a party name rather than confirming_party_absent, and the
+# authority step decides it. Stated at 0abf726; no vector pinned it, and a checker
+# that trims scores 46/46.
+add("acc-confirming-party-whitespace-only", case(jws(body(confirming_party="   "))), "unknown",
+    ["acceptance_authority_unresolved"],
+    what="sentence 7: whitespace only is a party name, not absent; a trimming checker calls this malformed/confirming_party_absent")
+
 out = {"description": "Acceptance-record vectors for Shodai's condition set (x402-foundation/tsc#4, 2026-10-04), keys per "
        "draft-krausz-verification-state-03 5.4.2. Conditions compare as SETS. Built by build_vectors.py; CC0-1.0.",
        "vectors": V}
