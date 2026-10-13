@@ -72,6 +72,30 @@ def is_small_order(P) -> bool:
     return _eq(_mul(8, P), _O)
 
 
+def is_torsion_free(P) -> bool:
+    """True iff [L]P = identity, i.e. P lies in the prime-order subgroup. A point that is neither small-order nor torsion-free is
+    MIXED-ORDER (prime-order part + a torsion part): whether a signature under it verifies depends on whether the verifier uses
+    the cofactored or cofactorless equation of RFC 8032 5.1.7, so two conforming verifiers can disagree (sentence 9;
+    x402-foundation/tsc#4, TKCollective's 2026-10-13 measurement table, case 3)."""
+    return _eq(_mul(_L, P), _O)
+
+
+def is_mixed_order_key(public_key: bytes) -> bool:
+    try:
+        P = _decode(public_key)
+        return not is_small_order(P) and not is_torsion_free(P)
+    except Exception:
+        return False
+
+
+def encode(P) -> bytes:
+    """RFC 8032 5.1.2 point encoding (used by the vector builder)."""
+    X, Y, Z, _ = P
+    zi = pow(Z, _p - 2, _p)
+    x, y = X * zi % _p, Y * zi % _p
+    return (y | ((x & 1) << 255)).to_bytes(32, "little")
+
+
 def is_small_order_key(public_key: bytes) -> bool:
     try:
         return is_small_order(_decode(public_key))
@@ -86,6 +110,8 @@ def verify(public_key: bytes, message: bytes, signature: bytes) -> bool:
         A = _decode(public_key)
         R = _decode(signature[:32])
         if is_small_order(A) or is_small_order(R):
+            return False
+        if not is_torsion_free(A) or not is_torsion_free(R):     # mixed-order (sentence 9)
             return False
         s = int.from_bytes(signature[32:], "little")
         if s >= _L:

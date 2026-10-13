@@ -80,7 +80,7 @@ def _resolve_kid(kid, jwks):
             except ValueError:
                 continue
             # A small-order point is not a key of the confirming party: no check can run (-03 5.4.2(a)).
-            if len(x) == 32 and not _ed25519.is_small_order_key(x):
+            if len(x) == 32 and not _ed25519.is_small_order_key(x) and not _ed25519.is_mixed_order_key(x):   # sentences 4 and 9
                 return x
     return None
 

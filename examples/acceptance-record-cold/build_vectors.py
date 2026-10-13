@@ -212,6 +212,61 @@ add("acc-confirming-party-whitespace-only", case(jws(body(confirming_party="   "
     ["acceptance_authority_unresolved"],
     what="sentence 7: whitespace only is a party name, not absent; a trimming checker calls this malformed/confirming_party_absent")
 
+# Sentence 9: mixed-order points (a prime-order part plus a torsion part, so neither small-order nor in the prime-order
+# subgroup). Whether a signature under such a key, or with such an R, verifies depends on the verification equation: the
+# cofactorless [S]B = R + [k]A and the cofactored [8][S]B = [8]R + [8][k]A of RFC 8032 5.1.7 disagree whenever the torsion
+# term does not vanish. Reported on x402-foundation/tsc#4 by TKCollective's measurement table (2026-10-13, case 3:
+# mixed-order A and R accepted by their guard and by the library). Built on cp-1's real scalar a and the order-8 point above.
+import _ed25519 as _E
+_T = _E._decode(ORDER8)
+assert _E._eq(_E._mul(8, _T), _E._O) and not _E.is_torsion_free(_T)
+assert _E.encode(_E._mul(_a, _E._B)) == CP_PK
+_MSG = f"{SAME['protected']}.{SAME['payload']}".encode()
+_A_MIX = _E.encode(_E._add(_E._mul(_a, _E._B), _T))           # cp-1's key plus an order-8 torsion component
+assert _E.is_mixed_order_key(_A_MIX)
+
+
+def _eqs(pub, sig):
+    """(cofactorless, cofactored) RFC 8032 5.1.7 results for this signature over _MSG, computed directly."""
+    A, R, S = _E._decode(pub), _E._decode(sig[:32]), int.from_bytes(sig[32:], "little")
+    k = int.from_bytes(hashlib.sha512(sig[:32] + pub + _MSG).digest(), "little") % L
+    lhs, rhs = _E._mul(S, _E._B), _E._add(R, _E._mul(k, A))
+    return _E._eq(lhs, rhs), _E._eq(_E._mul(8, lhs), _E._mul(8, rhs))
+
+
+def _mixed_key_sig(want_k_mult_8):
+    for i in range(4096):
+        r = int.from_bytes(hashlib.sha512(b"acceptance-vectors/mixed-order nonce " + str(i).encode()).digest(), "little") % L
+        R = _E.encode(_E._mul(r, _E._B))
+        k = int.from_bytes(hashlib.sha512(R + _A_MIX + _MSG).digest(), "little") % L
+        if (k % 8 == 0) == want_k_mult_8:
+            return R + ((r + k * _a) % L).to_bytes(32, "little")
+    raise SystemExit("no nonce found")
+
+
+_SIG_BOTH = _mixed_key_sig(True)
+_SIG_SPLIT = _mixed_key_sig(False)
+assert _eqs(_A_MIX, _SIG_BOTH) == (True, True)       # every RFC 8032 verifier accepts it
+assert _eqs(_A_MIX, _SIG_SPLIT) == (False, True)     # cofactored accepts, cofactorless rejects
+add("acc-mixed-order-key-accepted-by-both-equations", {**case({**SAME, "signature": b64(_SIG_BOTH)}), "trust_material": jwks_cp1(_A_MIX)},
+    "key_unresolved", [], key_step="key_unresolved",
+    what="sentence 9: cp-1's key plus an order-8 torsion point (mixed-order); the signature satisfies both the cofactorless and "
+    "the cofactored equation (k divisible by 8), so a plain RFC 8032 verifier accepts it; a mixed-order key is not a key of the "
+    "confirming party")
+add("acc-mixed-order-key-equations-disagree", {**case({**SAME, "signature": b64(_SIG_SPLIT)}), "trust_material": jwks_cp1(_A_MIX)},
+    "key_unresolved", [], key_step="key_unresolved",
+    what="sentence 9: the same mixed-order key; this signature satisfies the cofactored equation and fails the cofactorless one, "
+    "so two conforming RFC 8032 verifiers disagree on it; the key step decides it before any equation is used")
+_r3 = int.from_bytes(hashlib.sha512(b"acceptance-vectors/mixed-order R").digest(), "little") % L
+_R3 = _E.encode(_E._add(_E._mul(_r3, _E._B), _T))
+_k3 = int.from_bytes(hashlib.sha512(_R3 + CP_PK + _MSG).digest(), "little") % L
+_SIG_R3 = _R3 + ((_r3 + _k3 * _a) % L).to_bytes(32, "little")
+assert _eqs(CP_PK, _SIG_R3) == (False, True)         # cofactored accepts a mixed-order R; cofactorless rejects
+add("acc-mixed-order-r-real-key", case({**SAME, "signature": b64(_SIG_R3)}), "malformed", ["signature_invalid"],
+    key_step="signature_invalid",
+    what="sentence 9: cp-1's real key; R = [r]B plus an order-8 torsion point, S = r + k*a: the cofactored equation accepts it, "
+    "the cofactorless one rejects it; a mixed-order R is signature_invalid")
+
 out = {"description": "Acceptance-record vectors for Shodai's condition set (x402-foundation/tsc#4, 2026-10-04), keys per "
        "draft-krausz-verification-state-03 5.4.2. Conditions compare as SETS. Built by build_vectors.py; CC0-1.0.",
        "vectors": V}
