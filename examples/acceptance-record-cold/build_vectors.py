@@ -226,28 +226,40 @@ _A_MIX = _E.encode(_E._add(_E._mul(_a, _E._B), _T))           # cp-1's key plus 
 assert _E.is_mixed_order_key(_A_MIX)
 
 
-def _eqs(pub, sig):
-    """(cofactorless, cofactored) RFC 8032 5.1.7 results for this signature over _MSG, computed directly."""
+def _eqs(pub, sig, reduce_k=False):
+    """(cofactorless, cofactored) RFC 8032 5.1.7 results for this signature over _MSG, computed directly. RFC 8032 takes k as the full
+    512-bit digest; many verifiers reduce it mod L first. With a mixed-order A the two differ (L is odd, so k and k mod L can differ
+    mod 8 and the torsion term [k]T only vanishes when k = 0 mod 8): every vector below asserts BOTH conventions (TKCollective, x402
+    TSC #4, 2026-10-15: the first build reduced k and so held only for reducing verifiers)."""
     A, R, S = _E._decode(pub), _E._decode(sig[:32]), int.from_bytes(sig[32:], "little")
-    k = int.from_bytes(hashlib.sha512(sig[:32] + pub + _MSG).digest(), "little") % L
+    k = int.from_bytes(hashlib.sha512(sig[:32] + pub + _MSG).digest(), "little")
+    if reduce_k:
+        k %= L
     lhs, rhs = _E._mul(S, _E._B), _E._add(R, _E._mul(k, A))
     return _E._eq(lhs, rhs), _E._eq(_E._mul(8, lhs), _E._mul(8, rhs))
+
+
+def _eqs_both(pub, sig):
+    """The (cofactorless, cofactored) result when it is the same under full k and k mod L; asserts that it is."""
+    full, red = _eqs(pub, sig), _eqs(pub, sig, reduce_k=True)
+    assert full == red, f"k convention changes the result: full k {full}, k mod L {red}"
+    return full
 
 
 def _mixed_key_sig(want_k_mult_8):
     for i in range(4096):
         r = int.from_bytes(hashlib.sha512(b"acceptance-vectors/mixed-order nonce " + str(i).encode()).digest(), "little") % L
         R = _E.encode(_E._mul(r, _E._B))
-        k = int.from_bytes(hashlib.sha512(R + _A_MIX + _MSG).digest(), "little") % L
-        if (k % 8 == 0) == want_k_mult_8:
+        k = int.from_bytes(hashlib.sha512(R + _A_MIX + _MSG).digest(), "little")
+        if (k % 8 == 0) == want_k_mult_8 and ((k % L) % 8 == 0) == want_k_mult_8:   # same answer under full k and k mod L
             return R + ((r + k * _a) % L).to_bytes(32, "little")
     raise SystemExit("no nonce found")
 
 
 _SIG_BOTH = _mixed_key_sig(True)
 _SIG_SPLIT = _mixed_key_sig(False)
-assert _eqs(_A_MIX, _SIG_BOTH) == (True, True)       # every RFC 8032 verifier accepts it
-assert _eqs(_A_MIX, _SIG_SPLIT) == (False, True)     # cofactored accepts, cofactorless rejects
+assert _eqs_both(_A_MIX, _SIG_BOTH) == (True, True)       # every RFC 8032 verifier accepts it
+assert _eqs_both(_A_MIX, _SIG_SPLIT) == (False, True)     # cofactored accepts, cofactorless rejects
 add("acc-mixed-order-key-accepted-by-both-equations", {**case({**SAME, "signature": b64(_SIG_BOTH)}), "trust_material": jwks_cp1(_A_MIX)},
     "key_unresolved", [], key_step="key_unresolved",
     what="sentence 9: cp-1's key plus an order-8 torsion point (mixed-order); the signature satisfies both the cofactorless and "
@@ -261,7 +273,7 @@ _r3 = int.from_bytes(hashlib.sha512(b"acceptance-vectors/mixed-order R").digest(
 _R3 = _E.encode(_E._add(_E._mul(_r3, _E._B), _T))
 _k3 = int.from_bytes(hashlib.sha512(_R3 + CP_PK + _MSG).digest(), "little") % L
 _SIG_R3 = _R3 + ((_r3 + _k3 * _a) % L).to_bytes(32, "little")
-assert _eqs(CP_PK, _SIG_R3) == (False, True)         # cofactored accepts a mixed-order R; cofactorless rejects
+assert _eqs_both(CP_PK, _SIG_R3) == (False, True)         # cofactored accepts a mixed-order R; cofactorless rejects
 add("acc-mixed-order-r-real-key", case({**SAME, "signature": b64(_SIG_R3)}), "malformed", ["signature_invalid"],
     key_step="signature_invalid",
     what="sentence 9: cp-1's real key; R = [r]B plus an order-8 torsion point, S = r + k*a: the cofactored equation accepts it, "
