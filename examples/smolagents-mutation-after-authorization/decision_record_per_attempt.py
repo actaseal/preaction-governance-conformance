@@ -28,10 +28,26 @@ verifier holding the chain can tell when a record was dropped or reordered,
 which is what makes "before = N, after denied = N" countable from the log
 alone: executions = records with allowed=true, attempts = chain length.
 
+Three limits Kaelenx found in the first version (2e14508) by probing it,
+closed here:
+  - args are snapshotted at decision time (a JCS round-trip copy), so a
+    caller mutating a nested argument afterwards cannot change the record;
+  - args are bound to the tool's signature BEFORE the decision; one that does
+    not bind is recorded as a denial (reason "binding: ...") and never counted
+    as an execution, so allowed=true means the call was dispatched with
+    arguments that bind;
+  - a chain only proves its prefix, so deleting the final record went
+    unnoticed. head() = {n, tip} is returned inside every denial observation;
+    the agent's trajectory keeps it outside the log, and verify_chain(records,
+    head) fails when the log is shorter than or differs from that head.
+An allowed record still is not proof the tool body ran to its first line: that
+needs a counter inside the raw body, as Kaelenx's fixture does.
+
 Zero dependencies, never imports smolagents. ASCII/int JCS only (same
 disclosed limit as the sibling files).
 """
 import hashlib
+import inspect
 import json
 
 
@@ -62,10 +78,17 @@ class AttemptGuard:
         self.step += 1
         self.call_index = 0
 
-    def _decide(self, tool, args, tool_call_id=None):
+    def head(self):
+        return {"n": len(self.records), "tip": h(self.records[-1]) if self.records else None}
+
+    def _decide(self, tool, args, tool_call_id=None, bind_error=None):
+        args = json.loads(jcs(args))  # snapshot: later caller mutation can't reach the record
         attempt = {"run_id": self.run_id, "step": self.step, "call_index": self.call_index}
         self.call_index += 1
-        allowed, reason = self.policy(tool, args)
+        if bind_error is not None:
+            allowed, reason = False, f"binding: {bind_error}"
+        else:
+            allowed, reason = self.policy(tool, args)
         rec = {
             "attempt_id": h(attempt), **attempt,
             "tool_call_id": tool_call_id,
@@ -82,7 +105,12 @@ class AttemptGuard:
 
     def wrap(self, name, fn):
         def guarded(*, _tool_call_id=None, **kwargs):
-            rec = self._decide(name, kwargs, _tool_call_id)
+            try:
+                inspect.signature(fn).bind(**kwargs)
+                bind_error = None
+            except TypeError as e:
+                bind_error = str(e)
+            rec = self._decide(name, kwargs, _tool_call_id, bind_error)
             if not rec["allowed"]:
                 raise Denied(rec)
             self.executions += 1
@@ -90,18 +118,28 @@ class AttemptGuard:
         return guarded
 
 
-def observation(rec):
-    """Structured denial observation returned to the agent; 1:1 with a record."""
+def observation(rec, head):
+    """Structured denial observation returned to the agent; 1:1 with a record.
+    Carries the chain head as of this record, retained outside the log."""
     return {"denied": True, "attempt_id": rec["attempt_id"], "tool": rec["tool"],
-            "reason": rec["reason"], "policy_version": rec["policy_version"]}
+            "reason": rec["reason"], "policy_version": rec["policy_version"], "head": head}
 
 
-def verify_chain(records):
+def verify_chain(records, head=None):
+    """Prefix integrity, plus completeness up to `head` when one is given."""
     prev = None
     for r in records:
         if r["prev"] != prev:
             return False
+        if r["preimage_hash"] != h({"tool_hash": hashlib.sha256(r["tool"].encode()).hexdigest(),
+                                    "args_hash": h(r["args"]), "agent_id": r["agent_id"],
+                                    "policy_version": r["policy_version"]}):
+            return False
         prev = h(r)
+    if head is not None:
+        n = head["n"]
+        if len(records) < n or (n and h(records[n - 1]) != head["tip"]):
+            return False
     return True
 
 
@@ -122,11 +160,11 @@ def main():
         try:
             tools["refund"](customer="A", amount=amt)
         except Denied as e:
-            obs.append(observation(e.record))
+            obs.append(observation(e.record, g.head()))
     try:
         alias(customer="B", amount=5)
     except Denied as e:
-        obs.append(observation(e.record))
+        obs.append(observation(e.record, g.head()))
 
     # Step 2, ToolCallingAgent-shaped: model-supplied ids recorded alongside.
     g.new_step()
@@ -134,7 +172,7 @@ def main():
     try:
         tools["refund"](customer="A", amount=100, _tool_call_id="call_def")
     except Denied as e:
-        obs.append(observation(e.record))
+        obs.append(observation(e.record, g.head()))
 
     recs = g.records
     checks = [
@@ -153,6 +191,39 @@ def main():
         ("dropping a denied record breaks the chain", not verify_chain(recs[:2] + recs[3:])),
         ("reordering breaks the chain", not verify_chain([recs[1], recs[0]] + recs[2:])),
     ]
+
+    # Kaelenx's three probes against 2e14508, now expected to be caught.
+    k = AttemptGuard("run-2", "support-agent-1", "v3", lambda *_: (True, "ok"))
+    k.new_step()
+    entries = []
+
+    def read_balance(customer):
+        entries.append(customer)
+        return 42
+    try:
+        k.wrap("read_balance", read_balance)(customer="A", unexpected=True)
+    except Denied as e:
+        bad = e.record
+    checks.append(("args that don't bind: denied record, 0 executions, 0 body entries",
+                   bad["reason"].startswith("binding:") and not bad["allowed"]
+                   and k.executions == 0 and entries == []))
+
+    tail_obs = obs[-1]  # the denial observation the agent kept from step 2
+    checks.append(("deleting the final denied record fails against the kept head",
+                   verify_chain(recs, tail_obs["head"]) and not verify_chain(recs[:-1], tail_obs["head"])))
+
+    m = AttemptGuard("run-3", "support-agent-1", "v3", lambda *_: (False, "capability: read-only"))
+    m.new_step()
+    payload = {"amount": 1}
+    try:
+        m.wrap("refund", lambda payload: None)(payload=payload)
+    except Denied:
+        pass
+    payload["amount"] = 999
+    checks.append(("caller mutating a nested arg after decision leaves the record unchanged",
+                   m.records[0]["args"]["payload"]["amount"] == 1 and verify_chain(m.records)))
+    edited = [dict(m.records[0], args={"payload": {"amount": 999}})]
+    checks.append(("editing stored args breaks the preimage check", not verify_chain(edited)))
     for name, ok in checks:
         print(f"[{'PASS' if ok else 'FAIL'}] {name}")
     assert all(ok for _, ok in checks)

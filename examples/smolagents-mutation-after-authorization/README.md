@@ -152,9 +152,20 @@ recorded alongside, not substituted. Each record carries `prev`, the hash of the
 so a dropped or reordered record is detectable and "before = N, after denied = N" can be counted
 from the log alone: executions = records with `allowed=true`, attempts = chain length.
 
-12 checks: one record per attempt, executions equal allowed records, one structured denial
-observation per denied record, distinct ids for repeated calls in a loop, per-step reset, and chain
-breaks on a dropped or reordered record. Toy fixture, not an integration test against installed
+Three limits of the first version (2e14508), found by Kaelenx's probes
+([report](https://gist.github.com/Kaelenx/f00c30d92193f9e00ffc46292d9264ac/088fa1079bc616e755eaf65f7e650534c2889b5c)),
+are closed here: args are snapshotted at decision time, so mutating a nested argument afterwards
+cannot change the record, and `verify_chain` recomputes each `preimage_hash` from the stored args;
+args are bound to the tool's signature before the decision, and a call that does not bind is
+recorded as a denial (`binding: ...`), not an execution; and since a chain only proves its prefix,
+every denial observation carries `head = {n, tip}`, which the agent's trajectory keeps outside the
+log, so deleting the final record fails `verify_chain(records, head)`. An allowed record is still
+not proof the tool body reached its first line; that needs a counter inside the raw body, as in
+Kaelenx's fixture.
+
+16 checks: one record per attempt, executions equal allowed records, one structured denial
+observation per denied record, distinct ids for repeated calls in a loop, per-step reset, chain
+breaks on a dropped or reordered record, and the three probes above. Toy fixture, not an integration test against installed
 smolagents; same ASCII/int JCS limit as the sibling files.
 
 ```bash
