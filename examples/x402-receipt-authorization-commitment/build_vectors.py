@@ -40,6 +40,12 @@ V.append({"id": "link-B", "kind": "link", **base, "commitment": cB, "salt": SB, 
           "expect": {"result": "linked", "nonce": B}})
 V.append({"id": "link-swapped-salt", "kind": "link", **base, "commitment": cA, "salt": SB, "candidates": "snapshot",
           "expect": {"result": "no_match"}, "note": "B's salt does not open A's commitment"})
+# holistis (x402#2887): the seller chooses `authorizer` when committing, but the verifier recomputes with the receipt's
+# signed `payer`. A commitment to someone else's authorization therefore opens to nothing -- never to a false link.
+OTHER = "0x" + "22" * 20
+V.append({"id": "link-commit-other-authorizer", "kind": "link", **base, "commitment": commit("eip3009", ASSET, OTHER, A, SA),
+          "salt": SA, "candidates": "snapshot", "expect": {"result": "no_match"},
+          "note": "committed with an authorizer other than the receipt payer: unlinkable (same as omitting the field), detectable, never a false link"})
 V.append({"id": "link-other-asset", "kind": "link", **base, "asset": "0x" + "11" * 20, "commitment": cA, "salt": SA,
           "candidates": "snapshot", "expect": {"result": "no_match"}, "note": "the asset is bound: same nonce on another token is a different commitment"})
 

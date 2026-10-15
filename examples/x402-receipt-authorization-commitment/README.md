@@ -54,7 +54,8 @@ does: it turns the narrowed set into a single row. The commitment is not unlinka
   meaning.
 - §5.3: the version-2 EIP-712 `Receipt` type appends `authorizationMethod` and `authorizationCommitment` (`string`),
   with the existing empty-string rule for unused optional fields.
-- §5.5 (both formats): a verifier holding the salt MAY query `AuthorizationUsed(payer, *)` on the asset, MUST find
+- §5.5 (both formats): the authorizer is the receipt's signed `payer`, never a value supplied with the salt (so a commitment to
+  another party's authorization opens to nothing; vector `link-commit-other-authorizer`, from holistis's review). A verifier holding the salt MAY query `AuthorizationUsed(payer, *)` on the asset, MUST find
   exactly one nonce whose commitment matches, and MAY confirm `authorizationState(payer, nonce)` is true.
 - §11: add the "no new pinpointing" statement above, and that a commitment without a CSPRNG salt is equivalent to
   publishing the nonce.
@@ -67,10 +68,13 @@ same construction would fit it. That still needs its own `method` value and vect
 | file | what |
 |---|---|
 | `commitment.py` | `commit()` and the holder-side `link()`; malformed input is refused with a named condition |
-| `vectors.json` | 18 vectors: 3 commit, 4 link (incl. swapped salt, other asset), 3 attack, 8 malformed |
+| `vectors.json` | 19 vectors: 3 commit, 5 link (incl. swapped salt, other asset, other authorizer), 3 attack, 8 malformed |
 | `candidates_snapshot.json` | the payer's 12 consumed nonces (Blockscout, 2026-10-15), so the vectors run offline |
-| `build_vectors.py` / `run_vectors.py` | regenerate / check (`python3 run_vectors.py` → 18/18) |
+| `build_vectors.py` / `run_vectors.py` | regenerate / check (`python3 run_vectors.py` → 19/19) |
 | `check_live.py` | same check against the live chain: Blockscout logs + `authorizationState` over JSON-RPC |
+
+Independently re-run by holistis on 2026-10-15 (18/18, `check_live.py` against the chain), who also contributed the
+normative salt requirement and the other-authorizer case.
 
 Test salts are `sha256("x402-rac-test-salt/<label>")` so anyone can regenerate them. They are not valid production salts.
 

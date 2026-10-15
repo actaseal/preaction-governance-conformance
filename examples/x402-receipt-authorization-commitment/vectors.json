@@ -86,6 +86,20 @@
    "note": "B's salt does not open A's commitment"
   },
   {
+   "id": "link-commit-other-authorizer",
+   "kind": "link",
+   "method": "eip3009",
+   "asset": "0x036cbd53842c5426634e7929541ec2318f3dcf7e",
+   "authorizer": "0x87f344b6ec48a936373d774d3de8649deeb66ee1",
+   "commitment": "0x53d28e2e471fe5869bd5e6bf948fea32949b0c060f1655c23b272bb62c27816d",
+   "salt": "0x23c8d831fdb7486693098aadf31d35a2ef18da729b3e29e905b977db1a054e6a",
+   "candidates": "snapshot",
+   "expect": {
+    "result": "no_match"
+   },
+   "note": "committed with an authorizer other than the receipt payer: unlinkable (same as omitting the field), detectable, never a false link"
+  },
+  {
    "id": "link-other-asset",
    "kind": "link",
    "method": "eip3009",
