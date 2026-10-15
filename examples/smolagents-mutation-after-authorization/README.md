@@ -134,3 +134,29 @@ not redistributed):
 pip install "git+https://github.com/Brodin2001/Agentguard.git@v0.2-action-bound-authorization"
 python3 agentguard_dispatch_test.py
 ```
+
+## One decision record per attempt, allowed or denied (2026-10-15)
+
+`full_receipt_adversarial_matrix.py` binds only authorized calls. `decision_record_per_attempt.py`
+emits the same preimage (tool, JCS args, `agent_id`, `policy_version`) for every attempt, plus
+`allowed`, `reason` and `decider`, at decision time and before the tool body runs. The guard sits
+at the callable boundary, so both dispatch shapes produce records.
+
+Correlating attempts inside one CodeAgent step (question from Kaelenx in #2117): generated code
+calls tools as plain functions and nothing upstream names each call, so the guard names it.
+`attempt_id = sha256(JCS({run_id, step, call_index}))`, where `call_index` is a per-step counter
+the guard increments on every entry to any guarded callable, before deciding. It counts attempts in
+execution order, including denied ones, calls inside loops and calls through a rebound alias, which
+a static count of the generated code cannot. A model-supplied `tool_call_id` (ToolCallingAgent) is
+recorded alongside, not substituted. Each record carries `prev`, the hash of the previous record,
+so a dropped or reordered record is detectable and "before = N, after denied = N" can be counted
+from the log alone: executions = records with `allowed=true`, attempts = chain length.
+
+12 checks: one record per attempt, executions equal allowed records, one structured denial
+observation per denied record, distinct ids for repeated calls in a loop, per-step reset, and chain
+breaks on a dropped or reordered record. Toy fixture, not an integration test against installed
+smolagents; same ASCII/int JCS limit as the sibling files.
+
+```bash
+python3 decision_record_per_attempt.py
+```
