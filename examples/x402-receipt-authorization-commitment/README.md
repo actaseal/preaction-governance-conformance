@@ -68,9 +68,9 @@ same construction would fit it. That still needs its own `method` value and vect
 | file | what |
 |---|---|
 | `commitment.py` | `commit()` and the holder-side `link()`; malformed input is refused with a named condition |
-| `vectors.json` | 19 vectors: 3 commit, 5 link (incl. swapped salt, other asset, other authorizer), 3 attack, 8 malformed |
+| `vectors.json` | 20 vectors: 4 commit (incl. the x402 spec §5.4 example), 5 link (incl. swapped salt, other asset, other authorizer), 3 attack, 8 malformed |
 | `candidates_snapshot.json` | the payer's 12 consumed nonces (Blockscout, 2026-10-15), so the vectors run offline |
-| `build_vectors.py` / `run_vectors.py` | regenerate / check (`python3 run_vectors.py` → 19/19) |
+| `build_vectors.py` / `run_vectors.py` | regenerate / check (`python3 run_vectors.py` → 20/20) |
 | `check_live.py` | same check against the live chain: Blockscout logs + `authorizationState` over JSON-RPC |
 
 Independently re-run by holistis on 2026-10-15 (18/18, `check_live.py` against the chain), who also contributed the

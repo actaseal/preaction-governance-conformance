@@ -40,6 +40,13 @@ V.append({"id": "link-B", "kind": "link", **base, "commitment": cB, "salt": SB, 
           "expect": {"result": "linked", "nonce": B}})
 V.append({"id": "link-swapped-salt", "kind": "link", **base, "commitment": cA, "salt": SB, "candidates": "snapshot",
           "expect": {"result": "no_match"}, "note": "B's salt does not open A's commitment"})
+# The x402 spec's own §5.4 version-2 example (PR text), so the published example is checkable.
+V.append({"id": "commit-spec-example", "kind": "commit", "method": "eip3009",
+          "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "authorizer": "0x857b06519E91e3A54538791bDbb0E22373e36b66",
+          "nonce": "0x" + hashlib.sha256(b"x402-rac-example/nonce").hexdigest(),
+          "salt": tsalt("spec-example"),
+          "expect": {"commitment": "0x5d905bbf08a97e04ab551d276d8e94b1abaff7d0737324d360e983c2796af23b"},
+          "note": "the version-2 receipt example in extension-offer-and-receipt.md §5.4 (Base USDC, example payer, test nonce + salt)"})
 # holistis (x402#2887): the seller chooses `authorizer` when committing, but the verifier recomputes with the receipt's
 # signed `payer`. A commitment to someone else's authorization therefore opens to nothing -- never to a false link.
 OTHER = "0x" + "22" * 20

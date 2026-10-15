@@ -86,6 +86,19 @@
    "note": "B's salt does not open A's commitment"
   },
   {
+   "id": "commit-spec-example",
+   "kind": "commit",
+   "method": "eip3009",
+   "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+   "authorizer": "0x857b06519E91e3A54538791bDbb0E22373e36b66",
+   "nonce": "0x5135a00b531830a13a751f3c48944d7a5fdfde7a3b87f73493591cd77efdef4f",
+   "salt": "0x10d2ae5f0c8536e82d882bf3d2c31a663597e890ca6c3fede0d278fd2a78f655",
+   "expect": {
+    "commitment": "0x5d905bbf08a97e04ab551d276d8e94b1abaff7d0737324d360e983c2796af23b"
+   },
+   "note": "the version-2 receipt example in extension-offer-and-receipt.md \u00a75.4 (Base USDC, example payer, test nonce + salt)"
+  },
+  {
    "id": "link-commit-other-authorizer",
    "kind": "link",
    "method": "eip3009",
